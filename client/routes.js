@@ -5,8 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 
-//Will delete this line later
-//will delete this line later again
+//boo
 
 /**
  * COMPONENT
