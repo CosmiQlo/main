@@ -13,7 +13,7 @@ const Product = db.define('product', {
     type: Sequelize.INTEGER
   },
   style: {
-    type: Sequelize.ENUM('men', 'women', 'kids')
+    type: Sequelize.ENUM('adult', 'kids')
   },
   price: {
     type: Sequelize.DECIMAL

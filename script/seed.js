@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Product} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -12,7 +12,60 @@ async function seed() {
     User.create({email: 'murphy@email.com', password: '123'})
   ])
 
+  const products = await Promise.all([
+    Product.create({
+      name: "Children's Space Suit",
+      imageUrl:
+        'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
+      quantity: 50,
+      style: 'adult',
+      price: 49.99,
+      description:
+        'Send your child to Moon school in this stylish, breathable onesie!'
+    }),
+    Product.create({
+      name: 'Space suit wedding dress',
+      imageUrl:
+        'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
+      quantity: 20,
+      style: 'adult',
+      price: 1099.99,
+      description:
+        'The only article of clothing appropriate for a destination wedding on Mars.'
+    }),
+    Product.create({
+      name: 'Sports uniform',
+      imageUrl:
+        'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
+      quantity: 150,
+      style: 'kids',
+      price: 29.99,
+      description:
+        'A stylish and practical sports outfit for your child who plays contact sports on the moon.'
+    }),
+    Product.create({
+      name: 'Space Pajamas',
+      imageUrl:
+        'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
+      quantity: 30,
+      style: 'adult',
+      price: 39.99,
+      description: 'Everyone needs something to sleep in, even in zero-gravity!'
+    }),
+    Product.create({
+      name: 'Space jeans',
+      imageUrl:
+        'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
+      quantity: 1000,
+      style: 'adult',
+      price: 15.99,
+      description:
+        'Who know that jeans for outer space would be so affordable? Made of a material FAR more comfortable than denim!'
+    })
+  ])
+
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${products.length} products`)
   console.log(`seeded successfully`)
 }
 
