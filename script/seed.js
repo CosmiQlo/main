@@ -18,7 +18,7 @@ async function seed() {
       imageUrl:
         'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
       quantity: 50,
-      style: 'adults',
+      style: 'kids',
       price: 49.99,
       description:
         'Send your child to Moon school in this stylish, breathable onesie!'

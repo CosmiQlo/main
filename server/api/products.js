@@ -19,12 +19,12 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.get('/kids', async (req, res, next) => {
+router.get('/style/kids', async (req, res, next) => {
   try {
     const productsForKids = await Product.findAll({
       //need to specify what exectly we should return in "include"-img,name etc-shouldnt return the whole product table and extra info
       where: {
-        type: 'kids'
+        style: 'kids'
       }
     })
     res.json(productsForKids)
@@ -32,12 +32,12 @@ router.get('/kids', async (req, res, next) => {
     next(err)
   }
 })
-router.get('/adults', async (req, res, next) => {
+router.get('/style/adults', async (req, res, next) => {
   try {
     const productsForAdults = await Product.findAll({
       //need to specify what exectly we should return in "include"-img,name etc-shouldnt return the whole product table and extra info
       where: {
-        type: 'adults'
+        style: 'adults'
       }
     })
     res.json(productsForAdults)
