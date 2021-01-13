@@ -18,7 +18,7 @@ async function seed() {
       imageUrl:
         'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
       quantity: 50,
-      style: 'adult',
+      style: 'adults',
       price: 49.99,
       description:
         'Send your child to Moon school in this stylish, breathable onesie!'
@@ -28,7 +28,7 @@ async function seed() {
       imageUrl:
         'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
       quantity: 20,
-      style: 'adult',
+      style: 'adults',
       price: 1099.99,
       description:
         'The only article of clothing appropriate for a destination wedding on Mars.'
@@ -48,7 +48,7 @@ async function seed() {
       imageUrl:
         'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
       quantity: 30,
-      style: 'adult',
+      style: 'adults',
       price: 39.99,
       description: 'Everyone needs something to sleep in, even in zero-gravity!'
     }),
@@ -57,7 +57,7 @@ async function seed() {
       imageUrl:
         'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
       quantity: 1000,
-      style: 'adult',
+      style: 'adults',
       price: 15.99,
       description:
         'Who know that jeans for outer space would be so affordable? Made of a material FAR more comfortable than denim!'
