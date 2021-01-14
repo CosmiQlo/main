@@ -9,7 +9,7 @@ const Product = db.define('product', {
   imageUrl: {
     type: Sequelize.TEXT
   },
-  quantity: {
+  inventory: {
     type: Sequelize.INTEGER
   },
   style: {
