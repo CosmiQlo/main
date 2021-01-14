@@ -3,6 +3,8 @@
 //
 // ## Preventing Injection Attacks
 
+//WE WILL HAVE A COLOMN ISADMIN FOR EVERY-USER//
+
 ;```javascript
 
 // don't do this
@@ -22,11 +24,9 @@ app.post('/users', async (req, res, next) => {
 	res.json(newUser);
 })
 
-```// ## Authorization via Express Gates
+```// Authentication == "who am i?" ==== LOGIN // ## Authorization via Express Gates
 
-// Authentication == "who am i?"
-
-// Authorization = "am I allowed to be here?"
+// Authorization = "am I allowed to be here?" === ADMIN
 
 ```javascript
 
@@ -48,8 +48,7 @@ app.get('/corporate-data', isAdmin, async(req, res, next) => {
 	res.send(MarketingData)
 })
 
-```// How can we extend this pattern, to make sure Dan doesn't have access to Jess' cart?
-//
+```// // How can we extend this pattern, to make sure Dan doesn't have access to Jess' cart?
 //
 // ## Hiding Secrets
 

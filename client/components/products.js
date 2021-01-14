@@ -1,9 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 import {fetchProducts} from '../store/products'
 
-export class Products extends React.Component() {
+export class Products extends React.Component {
   componentDidMount() {
     this.props.getProducts()
   }
@@ -17,7 +18,12 @@ export class Products extends React.Component() {
           return (
             // this could be where we make the product.name a LINK that goes to single product view, etc.
             <div key={product.id}>
-              <h1>{product.name}</h1>
+              <Link to={`/products/${product.id}`}>
+                <div>
+                  <h1>{product.name}</h1>
+                  <img src={product.imageUrl} />
+                </div>
+              </Link>
             </div>
           )
         })}

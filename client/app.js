@@ -13,5 +13,3 @@ const App = () => {
 }
 
 export default App
-
-// a comment created by Laura
