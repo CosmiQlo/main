@@ -13,6 +13,18 @@ const AuthForm = props => {
     <div>
       <form onSubmit={handleSubmit} name={name}>
         <div>
+          {name === 'signup' ? (
+            <div>
+              <label htmlFor="name">
+                <small>Name</small>
+              </label>
+              <input name="userName" type="text" />
+            </div>
+          ) : (
+            <div />
+          )}
+        </div>
+        <div>
           <label htmlFor="email">
             <small>Email</small>
           </label>
@@ -61,10 +73,21 @@ const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
       evt.preventDefault()
-      const formName = evt.target.name
-      const email = evt.target.email.value
-      const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
+      if (evt.target.userName) {
+        const formName = evt.target.name
+        const name = evt.target.userName.value
+        const email = evt.target.email.value
+        const password = evt.target.password.value
+        dispatch(auth(name, email, password, formName))
+      } else {
+        const formName = evt.target.name
+        const email = evt.target.email.value
+        const password = evt.target.password.value
+        // it is okay for us to pass in "null" as the name value because this thunk is called for users that are
+        // logging in, not signing up. We never use the name value when checking for a user whose email is in the
+        // database already!
+        dispatch(auth(null, email, password, formName))
+      }
     }
   }
 }
