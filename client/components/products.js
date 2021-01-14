@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 import {fetchProducts} from '../store/products'
 
-export class Products extends React.Component() {
+export class Products extends React.Component {
   componentDidMount() {
     this.props.getProducts()
   }
@@ -18,6 +18,7 @@ export class Products extends React.Component() {
             // this could be where we make the product.name a LINK that goes to single product view, etc.
             <div key={product.id}>
               <h1>{product.name}</h1>
+              <img src={product.imageUrl} />
             </div>
           )
         })}
