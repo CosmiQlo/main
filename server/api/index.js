@@ -1,7 +1,8 @@
 const router = require('express').Router()
 module.exports = router
-
+//not using this yet
 router.use('/users', require('./users'))
+//we're using for everyone, not logged in
 router.use('/products', require('./products'))
 
 router.use((req, res, next) => {
