@@ -1,14 +1,13 @@
 const router = require('express').Router()
 // const {Product} = require('../db/models/product')
 const {Order} = require('../db/models/order')
-//const OP = the through table
+const {User} = require('../db/models/user')
+const {orderProducts} = require('../db/models/orderProduct')
 
 //GET/api/cart - gets us all the orders that have not been completed yet
 router.get('/', async (req, res, next) => {
   try {
-    const items = await Order.findAll({
-      where: {status: 'pending'}
-    })
+    const items = await orderProducts.findAll()
     res.json(items)
   } catch (err) {
     next(err)
@@ -18,11 +17,15 @@ router.get('/', async (req, res, next) => {
 //ADD/api/cart - adds an item to cart
 router.post('/', async (req, res, next) => {
   try {
-    const item = await Order.create({
-      status: req.body.status,
-      date: req.body.date,
-      total: req.body.total
-    })
+    const item = await Order.create(
+      // {
+      // status: req.body.status,
+      // date: req.body.date,
+      // total: req.body.total,
+      // userId:req.body.userId
+      // }
+      req.body
+    )
     res.json(item)
   } catch (error) {
     next(error)
