@@ -18,13 +18,13 @@ const orderProduct = require('./orderProduct')
 
 //Product - Order Associations
 
-Product.belongsToMany(Order, {
-  through: orderProduct
-})
-
 Order.belongsToMany(Product, {
   through: orderProduct
 })
+
+// Product.belongsToMany(Order, {
+//   through: orderProduct,
+// })
 
 //User and Order Associations
 
@@ -33,8 +33,8 @@ Order.belongsTo(User)
 
 //Product and User Associations
 
-Product.belongsToMany(User, {through: 'ProductUser'})
-User.belongsToMany(Product, {through: 'ProductUser'})
+// Product.belongsToMany(User, {through: 'ProductUser'})
+// User.belongsToMany(Product, {through: 'ProductUser'})
 
 module.exports = {
   User,

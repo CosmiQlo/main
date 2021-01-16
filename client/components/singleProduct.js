@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import Cart from './cart'
 
 import {fetchSingleProduct} from '../store/singleProduct'
 
@@ -16,6 +17,7 @@ export class singleProduct extends React.Component {
     // console.log('singleProduct props:', this.props)
     return (
       <div>
+        <Cart />
         <h1>{this.props.singleProduct.name}</h1>
       </div>
     )

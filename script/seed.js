@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Product} = require('../server/db/models')
+const {User, Product, Order, orderProduct} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -77,6 +77,54 @@ async function seed() {
         'Who know that jeans for outer space would be so affordable? Made of a material FAR more comfortable than denim!'
     })
   ])
+
+  const order1 = await Order.create({
+    status: 'pending',
+    date: new Date(),
+    total: 100.0
+  })
+  const order2 = await Order.create({
+    status: 'pending',
+    date: new Date(),
+    total: 200.0
+  })
+
+  console.log(
+    'printing Order magic methods:',
+    Object.keys(Order.prototype)
+    // Object.keys(Order.prototype),
+    // Object.keys(orderProduct.prototype),
+    // Object.keys(User.prototype)
+  )
+
+  // user logs in, backend retrieves userId and all relevant user data
+  const someUser = await User.findByPk(1)
+  // once user adds something to cart, create order
+  // BETTER: only create order when user hits "submit"
+  // redux state that is keeping track of what products are in the cart, so we know what to send when the user hits submit
+
+  // PAUSE HERE
+  await someUser.addOrder(order1)
+
+  const product1 = await Product.findByPk(1)
+  const product2 = await Product.findByPk(2)
+  await order1.addProducts([product1, product2])
+
+  console.log('order 1 with products added:', await order1.getProducts())
+
+  // const someUser = await User.findByPk(1)
+  // // console.log('here is someUser before we add an order:', someUser)
+  // await someUser.addOrder(order1)
+  // await someUser.addOrder(order2)
+
+  // console.log(
+  //   'user order 1:',
+  //   await someUser.getOrders({
+  //     where: {
+  //       id: 1,
+  //     },
+  //   })
+  // )
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${products.length} products`)
