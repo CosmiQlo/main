@@ -15,7 +15,7 @@ export const UserHome = props => {
       <h3>Welcome, {name ? name : 'SpaceWalker!'}</h3>
       <div>
         {/* if we have refreshed the page and there is no user on props yet, we don't load the cart. We only load the cart when we have a user's cart to fetch */}
-        {!props.user.id ? (
+        {/* {!props.user.id ? (
           <div>
             <h6>Loading your cart...</h6>
           </div>
@@ -23,7 +23,7 @@ export const UserHome = props => {
           <div>
             <Cart />
           </div>
-        )}
+        )} */}
         <Products />
       </div>
     </div>

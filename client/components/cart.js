@@ -29,6 +29,7 @@ export class Cart extends Component {
   }
 
   render() {
+    console.log('cart props:', this.props)
     return (
       <form onSubmit={this.handleSubmit}>
         <div id="myCart">

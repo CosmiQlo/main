@@ -12,6 +12,8 @@ const defaultState = {
   inventory: 1
 }
 
+let haveNotUpdatedState = true
+
 class UpdateProduct extends React.Component {
   constructor() {
     super()
@@ -20,15 +22,32 @@ class UpdateProduct extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
+
+  // this is what Ksenia had:
+  // componentDidMount() {
+  //   this.setState({
+  //     // price: this.props.singleProduct.price,
+  //     // inventory: this.props.singleProduct.inventory
+  //     price: 13,
+  //     inventory: 20,
+  //   })
+  // }
+
   componentDidMount() {
-    this.setState({
-      // price: this.props.singleProduct.price,
-      // inventory: this.props.singleProduct.inventory
-      price: 13,
-      inventory: 20
-    })
+    console.log('componentDidMount, this.props:', this.props)
+    this.props.getProduct(this.props.productId)
   }
 
+  componentDidUpdate() {
+    if (
+      this.props.singleProduct.id &&
+      this.state.name === '' &&
+      haveNotUpdatedState
+    ) {
+      haveNotUpdatedState = false
+      this.setState({...this.props.singleProduct})
+    }
+  }
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
@@ -36,7 +55,6 @@ class UpdateProduct extends React.Component {
   }
   handleSubmit(event) {
     event.preventDefault()
-    // const updateProject = async (projectId) => {
     const data = {
       name: this.state.name,
       inventory: this.state.inventory,
@@ -53,9 +71,9 @@ class UpdateProduct extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <div>
           <h2> Update this product:</h2>
-          <ul>
-            <li>Name is requiared</li>
-          </ul>
+          {/* <ul>
+            <li>Name is required</li>
+          </ul> */}
           <label htmlFor="name">Products's new name:</label>
           <input
             type="text"
