@@ -334,6 +334,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      console.log('cart props:', this.props);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -395,6 +396,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var CartPage = function CartPage(props) {
+  console.log('props', props);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, !props.user.id ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Loading your cart...") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cart__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 };
 
@@ -45429,7 +45431,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
