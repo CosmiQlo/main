@@ -7,16 +7,11 @@ import UpdateProduct from './updateProduct'
 
 export class singleProduct extends React.Component {
   componentDidMount() {
-    // console.log(
-    //   'In singleProduct componentDidMount, here is the productId:',
-    //   this.props.match.params.productId
-    // )
     this.props.getProduct(this.props.match.params.productId)
   }
 
   render() {
     const product = this.props.singleProduct
-    // console.log('singleProduct props:', this.props)
     const id = this.props.match.params.productId
     return (
       <div>
