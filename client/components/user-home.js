@@ -3,21 +3,29 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Products from './products'
 import Cart from './cart'
-import {me} from '../store/user'
 /**
  * COMPONENT
  */
-export const UserHome = props => {
-  console.log('USER NAME PROPS:', props)
 
+export const UserHome = props => {
   const name = props.user.name
 
   return (
     <div>
       <h3>Welcome, {name ? name : 'SpaceWalker!'}</h3>
-      {/* we put cart on top just because we are working on it and don't want to have to scroll all the way down */}
-      <Cart loadUser={props.loadUser} />
-      <Products />
+      <div>
+        {/* if we have refreshed the page and there is no user on props yet, we don't load the cart. We only load the cart when we have a user's cart to fetch */}
+        {!props.user.id ? (
+          <div>
+            <h6>Loading your cart...</h6>
+          </div>
+        ) : (
+          <div>
+            <Cart />
+          </div>
+        )}
+        <Products />
+      </div>
     </div>
   )
 }
@@ -27,20 +35,11 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    // name: state.user.name,
     user: state.user
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    loadUser: () => {
-      dispatch(me())
-    }
-  }
-}
-
-export default connect(mapState, mapDispatch)(UserHome)
+export default connect(mapState)(UserHome)
 
 /**
  * PROP TYPES

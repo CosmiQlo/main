@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Cart from './cart'
 
 import {fetchSingleProduct} from '../store/singleProduct'
+import UpdateProduct from './updateProduct'
 
 export class singleProduct extends React.Component {
   componentDidMount() {
@@ -14,11 +15,27 @@ export class singleProduct extends React.Component {
   }
 
   render() {
+    const product = this.props.singleProduct
     // console.log('singleProduct props:', this.props)
+    const id = this.props.match.params.productId
     return (
       <div>
-        <Cart />
-        <h1>{this.props.singleProduct.name}</h1>
+        <h1>{product.name}</h1>
+        <h3>{product.price}</h3>
+        <p>{product.description}</p>
+        {this.props.user.isAdmin === true ? (
+          <UpdateProduct productId={id} />
+        ) : (
+          <div>
+            {product.inventory > 0 ? (
+              <div>
+                <button type="submit">ADD TO CART</button>
+              </div>
+            ) : (
+              'sorry, out of space-stock!'
+            )}
+          </div>
+        )}
       </div>
     )
   }
@@ -26,7 +43,8 @@ export class singleProduct extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    singleProduct: state.singleProduct
+    singleProduct: state.singleProduct,
+    user: state.user
   }
 }
 

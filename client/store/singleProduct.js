@@ -19,6 +19,19 @@ export const fetchSingleProduct = productId => async dispatch => {
   }
 }
 
+export const fetchUpdateSingleProduct = (productId, data) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    console.log('this is reducer')
+    const res = await axios.put(`/api/products/${productId}/update`, data)
+    dispatch(getSingleProduct(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 /*** REDUCERS ***/
 export default function singleProductReducer(state = initialState, action) {
   switch (action.type) {

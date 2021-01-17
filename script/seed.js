@@ -31,7 +31,7 @@ async function seed() {
       name: "Children's Space Suit",
       imageUrl:
         'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
-      quantity: 50,
+      inventory: 50,
       style: 'kids',
       price: 49.99,
       description:
@@ -41,7 +41,7 @@ async function seed() {
       name: 'Space suit wedding dress',
       imageUrl:
         'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
-      quantity: 20,
+      inventory: 20,
       style: 'adults',
       price: 1099.99,
       description:
@@ -51,7 +51,7 @@ async function seed() {
       name: 'Sports uniform',
       imageUrl:
         'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
-      quantity: 150,
+      inventory: 150,
       style: 'kids',
       price: 29.99,
       description:
@@ -61,7 +61,7 @@ async function seed() {
       name: 'Space Pajamas',
       imageUrl:
         'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
-      quantity: 30,
+      inventory: 30,
       style: 'adults',
       price: 39.99,
       description: 'Everyone needs something to sleep in, even in zero-gravity!'
@@ -70,7 +70,7 @@ async function seed() {
       name: 'Space jeans',
       imageUrl:
         'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
-      quantity: 1000,
+      inventory: 1000,
       style: 'adults',
       price: 15.99,
       description:

@@ -3,13 +3,13 @@ import {connect} from 'react-redux'
 import {fetchItems, processOrder} from '../store/cart'
 //import {processOrder} from '../store/cart'
 
+// we ONLY RENDER this component if we have user on state. The statement in user-home.js makes sure this is true.
 export class Cart extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentDidMount() {
-    // When we refresh the page, we lose all cart data, because it seems like we are losing the user piece of state. HOWEVER, the page still loads the user's name at the top? So, what is going on???
     this.props.getItems(this.props.user.id)
   }
   //show the alerbox for now
@@ -29,7 +29,6 @@ export class Cart extends Component {
   }
 
   render() {
-    console.log('Cart is rendering, and here are the props:', this.props)
     return (
       <form onSubmit={this.handleSubmit}>
         <div id="myCart">
