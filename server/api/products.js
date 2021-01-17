@@ -46,4 +46,16 @@ router.get('/style/adults', async (req, res, next) => {
   }
 })
 
+// PUT /api/products/:productId
+router.put('/:productId/update', async (req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.productId)
+    console.log(req.body)
+    product.update(req.body)
+    res.json(product)
+  } catch (err) {
+    next(err)
+  }
+})
+
 module.exports = router
