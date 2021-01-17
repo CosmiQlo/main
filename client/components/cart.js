@@ -1,34 +1,58 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchItems} from '../store/cart'
+import {fetchItems, processOrder} from '../store/cart'
+//import {processOrder} from '../store/cart'
 
 export class Cart extends Component {
+  constructor(props) {
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
   componentDidMount() {
     // When we refresh the page, we lose all cart data, because it seems like we are losing the user piece of state. HOWEVER, the page still loads the user's name at the top? So, what is going on???
     this.props.getItems(this.props.user.id)
   }
+  //show the alerbox for now
+  async handleSubmit() {
+    event.preventDefault()
+    console.log('cart orderId', this.props.cart[0].orderProduct.orderId)
+    const orderId = this.props.cart[0].orderProduct.orderId
+    alert('Your Order has been placed with OrderId')
+    try {
+      //process the order- update Order table with
+      //status="completed" and orderDate=today's date
+      await this.props.orderItems(orderId, 'completed', new Date())
+      //clear the cart
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   render() {
     console.log('Cart is rendering, and here are the props:', this.props)
     return (
-      <div id="myCart">
-        <h1>My Cart</h1>
-        <div>
-          {!this.props.user.id ? (
-            <div>Loading your cart...</div>
-          ) : (
-            <div>
-              {this.props.cart.map(item => {
-                return (
-                  <div key={item.id}>
-                    <h3>Item: {item.name}</h3>
-                    <h4>Price: {item.price}</h4>
-                  </div>
-                )
-              })}
-            </div>
-          )}
+      <form onSubmit={this.handleSubmit}>
+        <div id="myCart">
+          <h1>My Cart</h1>
+          <div>
+            {!this.props.user.id ? (
+              <div>Loading your cart...</div>
+            ) : (
+              <div>
+                {this.props.cart.map(item => {
+                  return (
+                    <div key={item.id}>
+                      <h3>Item: {item.name}</h3>
+                      <h4>Price: {item.price}</h4>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+          <button type="submit">Place Order</button>
         </div>
-      </div>
+      </form>
     )
     //add a table -
     //the item name, quantity, price, + button, - button, remove all button
@@ -50,6 +74,9 @@ const mapDispatch = dispatch => {
   return {
     getItems: userId => {
       dispatch(fetchItems(userId))
+    },
+    orderItems: (orderId, status, date) => {
+      dispatch(processOrder(orderId, status, date))
     }
   }
 }

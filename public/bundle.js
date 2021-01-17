@@ -243,6 +243,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_cart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/cart */ "./client/store/cart.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -251,9 +255,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -261,16 +265,21 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+ //import {processOrder} from '../store/cart'
 
 var Cart =
 /*#__PURE__*/
 function (_Component) {
   _inherits(Cart, _Component);
 
-  function Cart() {
+  function Cart(props) {
+    var _this;
+
     _classCallCheck(this, Cart);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Cart).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Cart).call(this, props));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Cart, [{
@@ -278,18 +287,65 @@ function (_Component) {
     value: function componentDidMount() {
       // When we refresh the page, we lose all cart data, because it seems like we are losing the user piece of state. HOWEVER, the page still loads the user's name at the top? So, what is going on???
       this.props.getItems(this.props.user.id);
-    }
+    } //show the alerbox for now
+
+  }, {
+    key: "handleSubmit",
+    value: function () {
+      var _handleSubmit = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var orderId;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                event.preventDefault();
+                console.log('cart orderId', this.props.cart[0].orderProduct.orderId);
+                orderId = this.props.cart[0].orderProduct.orderId;
+                alert('Your Order has been placed with OrderId');
+                _context.prev = 4;
+                _context.next = 7;
+                return this.props.orderItems(orderId, 'completed', new Date());
+
+              case 7:
+                _context.next = 12;
+                break;
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](4);
+                console.log(_context.t0);
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[4, 9]]);
+      }));
+
+      function handleSubmit() {
+        return _handleSubmit.apply(this, arguments);
+      }
+
+      return handleSubmit;
+    }()
   }, {
     key: "render",
     value: function render() {
       console.log('Cart is rendering, and here are the props:', this.props);
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "myCart"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "My Cart"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, !this.props.user.id ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading your cart...") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.cart.map(function (item) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: item.id
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Item: ", item.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Price: ", item.price));
-      })))); //add a table -
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit"
+      }, "Place Order"))); //add a table -
       //the item name, quantity, price, + button, - button, remove all button
       //tax - math problem - for now we'll assume a constant
       //final cost
@@ -311,6 +367,9 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     getItems: function getItems(userId) {
       dispatch(Object(_store_cart__WEBPACK_IMPORTED_MODULE_2__["fetchItems"])(userId));
+    },
+    orderItems: function orderItems(orderId, status, date) {
+      dispatch(Object(_store_cart__WEBPACK_IMPORTED_MODULE_2__["processOrder"])(orderId, status, date));
     }
   };
 };
@@ -875,16 +934,25 @@ socket.on('connect', function () {
 /*!******************************!*\
   !*** ./client/store/cart.js ***!
   \******************************/
-/*! exports provided: fetchItems, addItemThunk, default */
+/*! exports provided: fetchItems, processOrder, addItemThunk, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchItems", function() { return fetchItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "processOrder", function() { return processOrder; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addItemThunk", function() { return addItemThunk; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return cartReducer; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -896,6 +964,7 @@ var ADD_ITEM = 'ADD_ITEM';
 var GET_ITEMS = 'GET_ITEMS';
 var REMOVE_ITEM = 'REMOVE_ITEM';
 var REMOVE_ALL_ITEMS = 'REMOVE_ALL_ITEMS';
+var ORDER_ITEMS = 'ORDER_ITEMS';
 /*** INITIAL STATE ***/
 
 var initialState = [];
@@ -912,6 +981,15 @@ var getItems = function getItems(items) {
   return {
     type: GET_ITEMS,
     payload: items
+  };
+};
+
+var orderItems = function orderItems(orderId, status, date) {
+  return {
+    type: 'ORDER_ITEMS',
+    payload: orderId,
+    status: status,
+    date: date
   };
 };
 
@@ -973,7 +1051,7 @@ var fetchItems = function fetchItems(userId) {
     }()
   );
 };
-var addItemThunk = function addItemThunk(itemId) {
+var processOrder = function processOrder(orderId, status, date) {
   return (
     /*#__PURE__*/
     function () {
@@ -987,18 +1065,21 @@ var addItemThunk = function addItemThunk(itemId) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/cart/".concat(itemId));
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/orders/".concat(orderId), {
+                  status: status,
+                  date: date
+                });
 
               case 3:
                 res = _context2.sent;
-                dispatch(addItem(res.data));
+                dispatch(orderItems(res.data.id, res.data.status, res.data.date));
                 _context2.next = 10;
                 break;
 
               case 7:
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
-                console.error(_context2.t0);
+                console.log(_context2.t0);
 
               case 10:
               case "end":
@@ -1010,6 +1091,47 @@ var addItemThunk = function addItemThunk(itemId) {
 
       return function (_x2) {
         return _ref2.apply(this, arguments);
+      };
+    }()
+  );
+};
+var addItemThunk = function addItemThunk(itemId) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref3 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee3(dispatch) {
+        var res;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/cart/".concat(itemId));
+
+              case 3:
+                res = _context3.sent;
+                dispatch(addItem(res.data));
+                _context3.next = 10;
+                break;
+
+              case 7:
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                console.error(_context3.t0);
+
+              case 10:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[0, 7]]);
+      }));
+
+      return function (_x3) {
+        return _ref3.apply(this, arguments);
       };
     }()
   );
@@ -1034,6 +1156,9 @@ function cartReducer() {
     //   return addToCart(state, item)
     case GET_ITEMS:
       return action.payload;
+
+    case ORDER_ITEMS:
+      return _toConsumableArray(state);
 
     case REMOVE_ITEM:
       return action.payload;

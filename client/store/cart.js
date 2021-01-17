@@ -5,6 +5,7 @@ const ADD_ITEM = 'ADD_ITEM'
 const GET_ITEMS = 'GET_ITEMS'
 const REMOVE_ITEM = 'REMOVE_ITEM'
 const REMOVE_ALL_ITEMS = 'REMOVE_ALL_ITEMS'
+const ORDER_ITEMS = 'ORDER_ITEMS'
 
 /*** INITIAL STATE ***/
 const initialState = []
@@ -18,6 +19,13 @@ const addItem = item => ({
 const getItems = items => ({
   type: GET_ITEMS,
   payload: items
+})
+
+const orderItems = (orderId, status, date) => ({
+  type: 'ORDER_ITEMS',
+  payload: orderId,
+  status,
+  date
 })
 
 const removeItem = item => ({
@@ -38,6 +46,18 @@ export const fetchItems = userId => async dispatch => {
     dispatch(getItems(res.data))
   } catch (err) {
     console.error(err)
+  }
+}
+
+export const processOrder = (orderId, status, date) => async dispatch => {
+  try {
+    const res = await axios.put(`/api/orders/${orderId}`, {
+      status: status,
+      date: date
+    })
+    dispatch(orderItems(res.data.id, res.data.status, res.data.date))
+  } catch (err) {
+    console.log(err)
   }
 }
 
@@ -68,6 +88,8 @@ export default function cartReducer(state = initialState, action) {
     //   return addToCart(state, item)
     case GET_ITEMS:
       return action.payload
+    case ORDER_ITEMS:
+      return [...state]
     case REMOVE_ITEM:
       return action.payload
     case REMOVE_ALL_ITEMS:
