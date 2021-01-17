@@ -22,8 +22,24 @@ export class Products extends React.Component {
                 <div>
                   <h1>{product.name}</h1>
                   <img src={product.imageUrl} />
+                  <div>{product.inventory}</div>
                 </div>
               </Link>
+              {this.props.user.isAdmin === true ? (
+                <Link to={`/products/${product.id}`} productId={product.id}>
+                  EDIT
+                </Link>
+              ) : (
+                <div>
+                  {product.inventory > 0 ? (
+                    <div>
+                      <button type="submit">ADD TO CART</button>
+                    </div>
+                  ) : (
+                    'sorry, out of space-stock!'
+                  )}
+                </div>
+              )}
             </div>
           )
         })}
@@ -34,7 +50,8 @@ export class Products extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.products
+    products: state.products,
+    user: state.user
   }
 }
 
