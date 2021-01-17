@@ -57,5 +57,18 @@ router.put('/:productId/update', async (req, res, next) => {
     next(err)
   }
 })
-
+// DELETE /api/products/:productId
+router.delete('/:productId', async (req, res, next) => {
+  try {
+    await Product.destroy({
+      where: {
+        id: req.params.productId
+      }
+    })
+    const otherProducts = await Product.findAll()
+    res.send(otherProducts)
+  } catch (err) {
+    next(err)
+  }
+})
 module.exports = router
