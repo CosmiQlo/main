@@ -13,16 +13,17 @@ export class Cart extends Component {
     this.props.getItems(this.props.user.id)
   }
   //show the alerbox for now
-  async handleSubmit() {
+  async handleSubmit(event) {
     event.preventDefault()
     console.log('cart orderId', this.props.cart[0].orderProduct.orderId)
     const orderId = this.props.cart[0].orderProduct.orderId
-    alert('Your Order has been placed with OrderId')
+    alert('Your Order has been placed')
     try {
       //process the order- update Order table with
       //status="completed" and orderDate=today's date
-      await this.props.orderItems(orderId, 'completed', new Date())
+      await this.props.orderItems(orderId, 'complete', new Date())
       //clear the cart
+      this.props.getItems(this.props.user.id)
     } catch (err) {
       console.log(err)
     }
@@ -44,6 +45,12 @@ export class Cart extends Component {
                     <div key={item.id}>
                       <h3>Item: {item.name}</h3>
                       <h4>Price: {item.price}</h4>
+                      <p>
+                        Qty:{item.orderProduct.quantity}
+                        <button type="button">add</button>
+                        <button type="button">remove</button>
+                      </p>
+                      <button type="button">Remove Item</button>
                     </div>
                   )
                 })}

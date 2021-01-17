@@ -294,7 +294,7 @@ function (_Component) {
     value: function () {
       var _handleSubmit = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee() {
+      regeneratorRuntime.mark(function _callee(event) {
         var orderId;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
@@ -303,29 +303,31 @@ function (_Component) {
                 event.preventDefault();
                 console.log('cart orderId', this.props.cart[0].orderProduct.orderId);
                 orderId = this.props.cart[0].orderProduct.orderId;
-                alert('Your Order has been placed with OrderId');
+                alert('Your Order has been placed');
                 _context.prev = 4;
                 _context.next = 7;
-                return this.props.orderItems(orderId, 'completed', new Date());
+                return this.props.orderItems(orderId, 'complete', new Date());
 
               case 7:
-                _context.next = 12;
+                //clear the cart
+                this.props.getItems(this.props.user.id);
+                _context.next = 13;
                 break;
 
-              case 9:
-                _context.prev = 9;
+              case 10:
+                _context.prev = 10;
                 _context.t0 = _context["catch"](4);
                 console.log(_context.t0);
 
-              case 12:
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[4, 9]]);
+        }, _callee, this, [[4, 10]]);
       }));
 
-      function handleSubmit() {
+      function handleSubmit(_x) {
         return _handleSubmit.apply(this, arguments);
       }
 
@@ -342,7 +344,13 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "My Cart"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, !this.props.user.id ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading your cart...") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.cart.map(function (item) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: item.id
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Item: ", item.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Price: ", item.price));
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Item: ", item.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Price: ", item.price), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Qty:", item.orderProduct.quantity, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button"
+        }, "add"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button"
+        }, "remove")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button"
+        }, "Remove Item"));
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
       }, "Place Order"))); //add a table -
