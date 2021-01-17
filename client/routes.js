@@ -11,6 +11,7 @@ import {
   CartPage,
   UpdateProduct
 } from './components'
+import AllUsers from './components/AllUsers'
 import {me} from './store'
 
 /**
@@ -34,6 +35,7 @@ class Routes extends Component {
         <Route exact path="/products/:productId" component={singleProduct} />
         <Route path="/cart" component={CartPage} />
         <Route path="/products/:productId/update" component={UpdateProduct} />
+        <Route path="/users" component={AllUsers} />
 
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
