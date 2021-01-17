@@ -39,6 +39,8 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res) => {
+  // console.log('req in get api/auth/me', req)
+  // WHERE in the code did the req object get modified to include .user? Where is this happening??? Nothing is sent into this route!! Does it happen in the req.login function above, and if so, WHERE THE HECK IS THAT FUNCTION DEFINED?
   res.json(req.user)
 })
 

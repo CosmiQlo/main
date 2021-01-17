@@ -261,6 +261,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+ // we ONLY RENDER this component if we have user on state. The statement in user-home.js makes sure this is true.
 
 var Cart =
 /*#__PURE__*/
@@ -276,16 +277,14 @@ function (_Component) {
   _createClass(Cart, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // When we refresh the page, we lose all cart data, because it seems like we are losing the user piece of state. HOWEVER, the page still loads the user's name at the top? So, what is going on???
       this.props.getItems(this.props.user.id);
     }
   }, {
     key: "render",
     value: function render() {
-      console.log('Cart is rendering, and here are the props:', this.props);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "myCart"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "My Cart"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, !this.props.user.id ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading your cart...") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.cart.map(function (item) {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "My Cart"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.cart.map(function (item) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: item.id
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Item: ", item.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Price: ", item.price));
@@ -392,7 +391,9 @@ var Navbar = function Navbar(_ref) {
   }, "Home"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: "#",
     onClick: handleClick
-  }, "Logout")) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+  }, "Logout"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+    to: "/cart"
+  }, "Cart")) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/login"
   }, "Login"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
     to: "/signup"
@@ -626,8 +627,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _products__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./products */ "./client/components/products.js");
 /* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cart */ "./client/components/cart.js");
-/* harmony import */ var _store_user__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../store/user */ "./client/store/user.js");
-
 
 
 
@@ -638,11 +637,8 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 var UserHome = function UserHome(props) {
-  console.log('USER NAME PROPS:', props);
   var name = props.user.name;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Welcome, ", name ? name : 'SpaceWalker!'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cart__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    loadUser: props.loadUser
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_products__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Welcome, ", name ? name : 'SpaceWalker!'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, !props.user.id ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Loading your cart...")) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cart__WEBPACK_IMPORTED_MODULE_4__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_products__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
 };
 /**
  * CONTAINER
@@ -650,20 +646,11 @@ var UserHome = function UserHome(props) {
 
 var mapState = function mapState(state) {
   return {
-    // name: state.user.name,
     user: state.user
   };
 };
 
-var mapDispatch = function mapDispatch(dispatch) {
-  return {
-    loadUser: function loadUser() {
-      dispatch(Object(_store_user__WEBPACK_IMPORTED_MODULE_5__["me"])());
-    }
-  };
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState, mapDispatch)(UserHome));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState)(UserHome));
 /**
  * PROP TYPES
  */
@@ -809,6 +796,9 @@ function (_Component) {
         path: "/products/:productId",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["singleProduct"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/cart",
+        component: _components__WEBPACK_IMPORTED_MODULE_4__["Cart"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         component: _components__WEBPACK_IMPORTED_MODULE_4__["Login"]
       }));
     }
@@ -825,7 +815,8 @@ var mapState = function mapState(state) {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user
   };
 };
 
