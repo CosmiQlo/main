@@ -31,9 +31,10 @@ const removeAllItems = items => ({
 })
 
 /*** THUNK CREATOR ***/
-export const fetchItems = () => async dispatch => {
+export const fetchItems = userId => async dispatch => {
   try {
-    const res = await axios.get('/api/cart')
+    const res = await axios.get(`/api/cart/${userId}`)
+    // res.data is an array of items (the products in the order)
     dispatch(getItems(res.data))
   } catch (err) {
     console.error(err)
@@ -63,8 +64,8 @@ for remove -
 /*** REDUCERS ***/
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
-    case ADD_ITEM:
-      return addToCart(state, item)
+    // case ADD_ITEM:
+    //   return addToCart(state, item)
     case GET_ITEMS:
       return action.payload
     case REMOVE_ITEM:

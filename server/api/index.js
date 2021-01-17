@@ -4,6 +4,8 @@ module.exports = router
 router.use('/users', require('./users'))
 //we're using for everyone, not logged in
 router.use('/products', require('./products'))
+//cart routes:
+router.use('/cart', require('./cart'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')

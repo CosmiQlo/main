@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import Cart from './cart'
 
 import {fetchSingleProduct} from '../store/singleProduct'
 import UpdateProduct from './updateProduct'

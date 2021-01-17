@@ -1,14 +1,28 @@
 const router = require('express').Router()
 // const {Product} = require('../db/models/product')
-const {Order} = require('../db/models/order')
-const {User} = require('../db/models/user')
-const {orderProducts} = require('../db/models/orderProduct')
+const Order = require('../db/models/order')
+const User = require('../db/models/user')
+const orderProducts = require('../db/models/orderProduct')
 
-//GET/api/cart - gets us all the orders that have not been completed yet
-router.get('/', async (req, res, next) => {
+//GET/api/cart/userId - gets us the products in the order that is pending (there should only be one pending order, because we don't have a feature where someone can build multiple carts
+//returns an array of the products in that order
+router.get('/:userId', async (req, res, next) => {
   try {
-    const items = await orderProducts.findAll()
-    res.json(items)
+    let userId = req.params.userId
+    userId = parseInt(userId)
+    const currentUser = await User.findByPk(userId)
+    const userOrder = await currentUser.getOrders({
+      where: {
+        status: 'pending'
+      }
+    })
+    // console.log('userOrder:', userOrder)
+    // console.log('order.getProducts', await userOrder[0].getProducts())
+    let products = []
+    if (userOrder.length > 0) {
+      products = await userOrder[0].getProducts()
+    }
+    res.json(products)
   } catch (err) {
     next(err)
   }
