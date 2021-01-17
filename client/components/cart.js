@@ -1,34 +1,57 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchItems} from '../store/cart'
+import {fetchItems, processOrder} from '../store/cart'
+//import {processOrder} from '../store/cart'
 
 // we ONLY RENDER this component if we have user on state. The statement in user-home.js makes sure this is true.
 export class Cart extends Component {
+  constructor(props) {
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
   componentDidMount() {
     this.props.getItems(this.props.user.id)
+  }
+  //show the alerbox for now
+  async handleSubmit() {
+    event.preventDefault()
+    console.log('cart orderId', this.props.cart[0].orderProduct.orderId)
+    const orderId = this.props.cart[0].orderProduct.orderId
+    alert('Your Order has been placed with OrderId')
+    try {
+      //process the order- update Order table with
+      //status="completed" and orderDate=today's date
+      await this.props.orderItems(orderId, 'completed', new Date())
+      //clear the cart
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   render() {
     return (
-      <div id="myCart">
-        <h1>My Cart</h1>
-        <div>
-          {/* {!this.props.user.id ? (
-            <div>Loading your cart...</div>
-          ) : ( */}
+      <form onSubmit={this.handleSubmit}>
+        <div id="myCart">
+          <h1>My Cart</h1>
           <div>
-            {this.props.cart.map(item => {
-              return (
-                <div key={item.id}>
-                  <h3>Item: {item.name}</h3>
-                  <h4>Price: {item.price}</h4>
-                </div>
-              )
-            })}
+            {!this.props.user.id ? (
+              <div>Loading your cart...</div>
+            ) : (
+              <div>
+                {this.props.cart.map(item => {
+                  return (
+                    <div key={item.id}>
+                      <h3>Item: {item.name}</h3>
+                      <h4>Price: {item.price}</h4>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
           </div>
-          {/* )} */}
+          <button type="submit">Place Order</button>
         </div>
-      </div>
+      </form>
     )
     //add a table -
     //the item name, quantity, price, + button, - button, remove all button
@@ -50,6 +73,9 @@ const mapDispatch = dispatch => {
   return {
     getItems: userId => {
       dispatch(fetchItems(userId))
+    },
+    orderItems: (orderId, status, date) => {
+      dispatch(processOrder(orderId, status, date))
     }
   }
 }

@@ -243,6 +243,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_cart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store/cart */ "./client/store/cart.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -251,9 +255,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -261,34 +265,86 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- // we ONLY RENDER this component if we have user on state. The statement in user-home.js makes sure this is true.
+ //import {processOrder} from '../store/cart'
+// we ONLY RENDER this component if we have user on state. The statement in user-home.js makes sure this is true.
 
 var Cart =
 /*#__PURE__*/
 function (_Component) {
   _inherits(Cart, _Component);
 
-  function Cart() {
+  function Cart(props) {
+    var _this;
+
     _classCallCheck(this, Cart);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Cart).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Cart).call(this, props));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Cart, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.getItems(this.props.user.id);
-    }
+    } //show the alerbox for now
+
+  }, {
+    key: "handleSubmit",
+    value: function () {
+      var _handleSubmit = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var orderId;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                event.preventDefault();
+                console.log('cart orderId', this.props.cart[0].orderProduct.orderId);
+                orderId = this.props.cart[0].orderProduct.orderId;
+                alert('Your Order has been placed with OrderId');
+                _context.prev = 4;
+                _context.next = 7;
+                return this.props.orderItems(orderId, 'completed', new Date());
+
+              case 7:
+                _context.next = 12;
+                break;
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](4);
+                console.log(_context.t0);
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[4, 9]]);
+      }));
+
+      function handleSubmit() {
+        return _handleSubmit.apply(this, arguments);
+      }
+
+      return handleSubmit;
+    }()
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "myCart"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "My Cart"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.cart.map(function (item) {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "My Cart"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, !this.props.user.id ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading your cart...") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.cart.map(function (item) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: item.id
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Item: ", item.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Price: ", item.price));
-      })))); //add a table -
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit"
+      }, "Place Order"))); //add a table -
       //the item name, quantity, price, + button, - button, remove all button
       //tax - math problem - for now we'll assume a constant
       //final cost
@@ -310,6 +366,9 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     getItems: function getItems(userId) {
       dispatch(Object(_store_cart__WEBPACK_IMPORTED_MODULE_2__["fetchItems"])(userId));
+    },
+    orderItems: function orderItems(orderId, status, date) {
+      dispatch(Object(_store_cart__WEBPACK_IMPORTED_MODULE_2__["processOrder"])(orderId, status, date));
     }
   };
 };
@@ -486,6 +545,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this = this;
+
       // we have something called this.props.products
       // console.log('In render, props =', this.props)
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.products.map(function (product) {
@@ -496,7 +557,12 @@ function (_React$Component) {
             to: "/products/".concat(product.id)
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, product.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
             src: product.imageUrl
-          }))))
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, product.inventory))), _this.props.user.isAdmin === true ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+            to: "/products/".concat(product.id),
+            productId: product.id
+          }, "EDIT") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, product.inventory > 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            type: "submit"
+          }, "ADD TO CART")) : 'sorry, out of space-stock!'))
         );
       }));
     }
@@ -539,6 +605,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cart */ "./client/components/cart.js");
 /* harmony import */ var _store_singleProduct__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/singleProduct */ "./client/store/singleProduct.js");
+/* harmony import */ var _updateProduct__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./updateProduct */ "./client/components/updateProduct.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -556,6 +623,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -584,8 +652,14 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // console.log('singleProduct props:', this.props)
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cart__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, this.props.singleProduct.name));
+      var product = this.props.singleProduct; // console.log('singleProduct props:', this.props)
+
+      var id = this.props.match.params.productId;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, product.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, product.price), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, product.description), this.props.user.isAdmin === true ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_updateProduct__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        productId: id
+      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, product.inventory > 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit"
+      }, "ADD TO CART")) : 'sorry, out of space-stock!'));
     }
   }]);
 
@@ -594,7 +668,8 @@ function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    singleProduct: state.singleProduct
+    singleProduct: state.singleProduct,
+    user: state.user
   };
 };
 
@@ -607,6 +682,153 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(singleProduct));
+
+/***/ }),
+
+/***/ "./client/components/updateProduct.js":
+/*!********************************************!*\
+  !*** ./client/components/updateProduct.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_singleProduct__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/singleProduct */ "./client/store/singleProduct.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var defaultState = {
+  name: '',
+  price: 0,
+  inventory: 1
+};
+
+var UpdateProduct =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(UpdateProduct, _React$Component);
+
+  function UpdateProduct() {
+    var _this;
+
+    _classCallCheck(this, UpdateProduct);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(UpdateProduct).call(this));
+    _this.state = defaultState;
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(UpdateProduct, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.setState({
+        // price: this.props.singleProduct.price,
+        // inventory: this.props.singleProduct.inventory
+        price: 13,
+        inventory: 20
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      event.preventDefault(); // const updateProject = async (projectId) => {
+
+      var data = {
+        name: this.state.name,
+        inventory: this.state.inventory,
+        price: this.state.price
+      };
+      this.props.loadUpdateProduct(this.props.productId, data);
+      this.setState(defaultState); // updateProject(this.props.projectId)
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, " Update this product:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Name is requiared")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "name"
+      }, "Products's new name:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "name",
+        value: this.state.name,
+        onChange: this.handleChange
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "price"
+      }, "Price:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "number",
+        name: "price",
+        value: this.state.price,
+        onChange: this.handleChange
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "inventory"
+      }, "inventory:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "number",
+        name: "inventory",
+        value: this.state.inventory,
+        onChange: this.handleChange
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "back",
+        type: "submit"
+      }, "Update Product!"));
+    }
+  }]);
+
+  return UpdateProduct;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var mapState = function mapState(state) {
+  return {
+    singleProduct: state.singleProduct
+  };
+};
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    loadUpdateProduct: function loadUpdateProduct(productId, data) {
+      return dispatch(Object(_store_singleProduct__WEBPACK_IMPORTED_MODULE_3__["fetchUpdateSingleProduct"])(productId, data));
+    },
+    getProduct: function getProduct(productId) {
+      dispatch(Object(_store_singleProduct__WEBPACK_IMPORTED_MODULE_3__["fetchSingleProduct"])(productId));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapState, mapDispatch)(UpdateProduct));
 
 /***/ }),
 
@@ -799,6 +1021,9 @@ function (_Component) {
         path: "/cart",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["Cart"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/products/:productId/update",
+        component: _components__WEBPACK_IMPORTED_MODULE_4__["UpdateProduct"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         component: _components__WEBPACK_IMPORTED_MODULE_4__["Login"]
       }));
     }
@@ -866,16 +1091,25 @@ socket.on('connect', function () {
 /*!******************************!*\
   !*** ./client/store/cart.js ***!
   \******************************/
-/*! exports provided: fetchItems, addItemThunk, default */
+/*! exports provided: fetchItems, processOrder, addItemThunk, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchItems", function() { return fetchItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "processOrder", function() { return processOrder; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addItemThunk", function() { return addItemThunk; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return cartReducer; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -887,6 +1121,7 @@ var ADD_ITEM = 'ADD_ITEM';
 var GET_ITEMS = 'GET_ITEMS';
 var REMOVE_ITEM = 'REMOVE_ITEM';
 var REMOVE_ALL_ITEMS = 'REMOVE_ALL_ITEMS';
+var ORDER_ITEMS = 'ORDER_ITEMS';
 /*** INITIAL STATE ***/
 
 var initialState = [];
@@ -903,6 +1138,15 @@ var getItems = function getItems(items) {
   return {
     type: GET_ITEMS,
     payload: items
+  };
+};
+
+var orderItems = function orderItems(orderId, status, date) {
+  return {
+    type: 'ORDER_ITEMS',
+    payload: orderId,
+    status: status,
+    date: date
   };
 };
 
@@ -964,7 +1208,7 @@ var fetchItems = function fetchItems(userId) {
     }()
   );
 };
-var addItemThunk = function addItemThunk(itemId) {
+var processOrder = function processOrder(orderId, status, date) {
   return (
     /*#__PURE__*/
     function () {
@@ -978,18 +1222,21 @@ var addItemThunk = function addItemThunk(itemId) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/cart/".concat(itemId));
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/orders/".concat(orderId), {
+                  status: status,
+                  date: date
+                });
 
               case 3:
                 res = _context2.sent;
-                dispatch(addItem(res.data));
+                dispatch(orderItems(res.data.id, res.data.status, res.data.date));
                 _context2.next = 10;
                 break;
 
               case 7:
                 _context2.prev = 7;
                 _context2.t0 = _context2["catch"](0);
-                console.error(_context2.t0);
+                console.log(_context2.t0);
 
               case 10:
               case "end":
@@ -1001,6 +1248,47 @@ var addItemThunk = function addItemThunk(itemId) {
 
       return function (_x2) {
         return _ref2.apply(this, arguments);
+      };
+    }()
+  );
+};
+var addItemThunk = function addItemThunk(itemId) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref3 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee3(dispatch) {
+        var res;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/cart/".concat(itemId));
+
+              case 3:
+                res = _context3.sent;
+                dispatch(addItem(res.data));
+                _context3.next = 10;
+                break;
+
+              case 7:
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+                console.error(_context3.t0);
+
+              case 10:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, null, [[0, 7]]);
+      }));
+
+      return function (_x3) {
+        return _ref3.apply(this, arguments);
       };
     }()
   );
@@ -1025,6 +1313,9 @@ function cartReducer() {
     //   return addToCart(state, item)
     case GET_ITEMS:
       return action.payload;
+
+    case ORDER_ITEMS:
+      return _toConsumableArray(state);
 
     case REMOVE_ITEM:
       return action.payload;
@@ -1237,12 +1528,13 @@ function productsReducer() {
 /*!***************************************!*\
   !*** ./client/store/singleProduct.js ***!
   \***************************************/
-/*! exports provided: fetchSingleProduct, default */
+/*! exports provided: fetchSingleProduct, fetchUpdateSingleProduct, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSingleProduct", function() { return fetchSingleProduct; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchUpdateSingleProduct", function() { return fetchUpdateSingleProduct; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return singleProductReducer; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -1305,6 +1597,48 @@ var fetchSingleProduct = function fetchSingleProduct(productId) {
 
       return function (_x) {
         return _ref.apply(this, arguments);
+      };
+    }()
+  );
+};
+var fetchUpdateSingleProduct = function fetchUpdateSingleProduct(productId, data) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref2 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(dispatch, getState) {
+        var res;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                console.log('this is reducer');
+                _context2.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/products/".concat(productId, "/update"), data);
+
+              case 4:
+                res = _context2.sent;
+                dispatch(getSingleProduct(res.data));
+                _context2.next = 11;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](0);
+                console.error(_context2.t0);
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 8]]);
+      }));
+
+      return function (_x2, _x3) {
+        return _ref2.apply(this, arguments);
       };
     }()
   );
@@ -45044,7 +45378,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
