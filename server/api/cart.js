@@ -44,12 +44,10 @@ router.post('/:userId', async (req, res, next) => {
     })
 
     let thisOrderId = 0
+    // let theOrder = {}
 
     if (!pendingOrders.length) {
       // if User does not currently have any active orders, create a new one and add this product to it:
-      console.log(
-        '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>this user has no pending orders'
-      )
       let newOrder = await Order.create({
         status: 'pending',
         date: new Date(),
@@ -58,6 +56,7 @@ router.post('/:userId', async (req, res, next) => {
       await newOrder.addProduct(productToAdd)
       await currentUser.addOrder(newOrder)
       thisOrderId = newOrder.id
+      // theOrder = newOrder
     } else {
       // isolate the active order and add this product to it:
       let currentOrder = pendingOrders[0]
@@ -75,6 +74,7 @@ router.post('/:userId', async (req, res, next) => {
         await currentOrder.save()
       }
       thisOrderId = currentOrder.id
+      // theOrder = currentOrder
     }
     let currentOrderProductRow = await orderProduct.findOne({
       where: {
@@ -88,13 +88,32 @@ router.post('/:userId', async (req, res, next) => {
       currentOrderProductRow.quantity = 1
     }
     currentOrderProductRow.price = productToAdd.price
-    // console.log('NOW currentOPR:', currentOrderProductRow)
+
     await currentOrderProductRow.save()
-    res.sendStatus(200)
+
+    // let returnVal = await theOrder.getProducts()
+    // res.json(returnVal)
+    res.json(productToAdd)
   } catch (error) {
     next(error)
   }
 })
+// let potentialReturnVal = await Product.findOne({
+//   where: {
+//     id: productId,
+//   },
+//   include: [
+//     {
+//       model: Order,
+//       where: {
+//         id: thisOrderId,
+//       },
+//     },
+//   ],
+// })
+// console.log('is this what we want to return?', potentialReturnVal)
+// res.sendStatus(200)
+// res.json(potentialReturnVal)
 
 /*
 //deleteOne/api/cart - deletes ONE item to cart

@@ -11,10 +11,12 @@ const ORDER_ITEMS = 'ORDER_ITEMS'
 const initialState = []
 
 /*** ACTION CREATORS ***/
+// currently unnecessary >>>
 const addItem = item => ({
   type: ADD_ITEM,
   payload: item
 })
+//^^^^^^^^^^^^^^^^^^^^^^^^^
 
 const getItems = items => ({
   type: GET_ITEMS,
@@ -65,7 +67,11 @@ export const addItemThunk = (userId, productId) => async dispatch => {
   try {
     //check if itemId already exists - *****COME BACK HERE FIRST AFTER SETTING UP BACKEND******
     const res = await axios.post(`/api/cart/${userId}`, {productId})
-    dispatch(addItem(res.data))
+    // dispatch(addItem(res.data))
+
+    const res2 = await axios.get(`/api/cart/${userId}`)
+    // res.data is an array of items (the products in the order)
+    dispatch(getItems(res2.data))
   } catch (err) {
     console.error(err)
   }

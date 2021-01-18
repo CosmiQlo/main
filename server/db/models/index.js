@@ -22,9 +22,9 @@ Order.belongsToMany(Product, {
   through: orderProduct
 })
 
-// Product.belongsToMany(Order, {
-//   through: orderProduct,
-// })
+Product.belongsToMany(Order, {
+  through: orderProduct
+})
 
 //User and Order Associations
 

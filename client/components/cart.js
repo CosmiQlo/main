@@ -32,7 +32,7 @@ export class Cart extends Component {
   }
 
   render() {
-    console.log('cart props:', this.props)
+    console.log('cart props:', this.props.cart)
     return (
       <form onSubmit={this.handleSubmit}>
         <div id="myCart">
@@ -52,11 +52,17 @@ export class Cart extends Component {
                         <img src={`${item.imageUrl}`} />
                       </p>
                       <p>Price: {item.price}</p>
+                      {/* <div>
+                        {!item.orderProduct ? (
+                          <p>Fetching quantity!</p>
+                        ) : ( */}
                       <p>
                         Qty:{item.orderProduct.quantity}
                         <button type="button">add</button>
                         <button type="button">remove</button>
                       </p>
+                      {/* )}
+                      </div> */}
                       <button type="button">Remove Item</button>
                     </div>
                   )
