@@ -3,10 +3,19 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
 import {fetchProducts} from '../store/products'
+import {addItemThunk} from '../store/cart'
 
 export class Products extends React.Component {
+  constructor() {
+    super()
+    this.addToCart = this.addToCart.bind(this)
+  }
   componentDidMount() {
     this.props.getProducts()
+  }
+
+  addToCart(userId, productId) {
+    this.props.addItemToCart(userId, productId)
   }
 
   render() {
@@ -27,16 +36,24 @@ export class Products extends React.Component {
               </Link>
               {this.props.user.isAdmin === true ? (
                 <Link to={`/products/${product.id}`} productId={product.id}>
+                  {/*comment out productId?*/}
                   EDIT
                 </Link>
               ) : (
                 <div>
                   {product.inventory > 0 ? (
                     <div>
-                      <button type="submit">ADD TO CART</button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          this.addToCart(this.props.user.id, product.id)
+                        }}
+                      >
+                        ADD TO CART
+                      </button>
                     </div>
                   ) : (
-                    'sorry, out of space-stock!'
+                    'Sorry, out of space-stock!'
                   )}
                 </div>
               )}
@@ -59,6 +76,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getProducts: () => {
       dispatch(fetchProducts())
+    },
+    addItemToCart: (userId, productId) => {
+      dispatch(addItemThunk(userId, productId))
     }
   }
 }
