@@ -5,6 +5,7 @@ import {
   fetchUpdateSingleProduct,
   fetchSingleProduct
 } from '../store/singleProduct'
+import removeProduct from '../store/products'
 
 const defaultState = {
   name: '',
@@ -61,49 +62,58 @@ class UpdateProduct extends React.Component {
       price: this.state.price
     }
     this.props.loadUpdateProduct(this.props.productId, data)
-    this.setState(defaultState)
+    // this.setState(defaultState)
 
     // updateProject(this.props.projectId)
   }
 
+  handleRemove(productId) {
+    this.props.removeProduct(productId)
+  }
+
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div>
-          <h2> Update this product:</h2>
-          {/* <ul>
-            <li>Name is required</li>
-          </ul> */}
-          <label htmlFor="name">Products's new name:</label>
-          <input
-            type="text"
-            name="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="price">Price:</label>
-          <input
-            type="number"
-            name="price"
-            value={this.state.price}
-            onChange={this.handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="inventory">inventory:</label>
-          <input
-            type="number"
-            name="inventory"
-            value={this.state.inventory}
-            onChange={this.handleChange}
-          />
-        </div>
-        <button className="back" type="submit">
-          Update Product!
-        </button>
-      </form>
+      <div>
+        {' '}
+        <form onSubmit={this.handleSubmit}>
+          <div>
+            <h2> Update this product:</h2>
+            {/* <ul>
+          <li>Name is required</li>
+        </ul> */}
+            <label htmlFor="name">Products's new name:</label>
+            <input
+              type="text"
+              name="name"
+              value={this.state.name}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="price">Price:</label>
+            <input
+              type="number"
+              name="price"
+              value={this.state.price}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="inventory">inventory:</label>
+            <input
+              type="number"
+              name="inventory"
+              value={this.state.inventory}
+              onChange={this.handleChange}
+            />
+          </div>
+          <button className="back" type="submit">
+            Update Product!
+          </button>
+        </form>
+        {/* here we can implement delete button, doent work yet, but i already wrote a reducer and route on the back-end for that */}
+        {/* <button className="del" onClick={() => this.handleRemove(this.props.singleProduct.id)} type="button" >X {this.props.singleProduct.name}</button> */}
+      </div>
     )
   }
 }
@@ -118,7 +128,9 @@ const mapDispatch = dispatch => {
       dispatch(fetchUpdateSingleProduct(productId, data)),
     getProduct: productId => {
       dispatch(fetchSingleProduct(productId))
-    }
+    },
+    removeProduct: productId => dispatch(removeProduct(productId))
   }
 }
+
 export default connect(mapState, mapDispatch)(UpdateProduct)
