@@ -545,6 +545,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _store_products__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/products */ "./client/store/products.js");
+/* harmony import */ var _store_cart__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/cart */ "./client/store/cart.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -555,13 +556,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -573,9 +575,13 @@ function (_React$Component) {
   _inherits(Products, _React$Component);
 
   function Products() {
+    var _this;
+
     _classCallCheck(this, Products);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Products).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Products).call(this));
+    _this.addToCart = _this.addToCart.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Products, [{
@@ -584,9 +590,14 @@ function (_React$Component) {
       this.props.getProducts();
     }
   }, {
+    key: "addToCart",
+    value: function addToCart(userId, productId) {
+      this.props.addItemToCart(userId, productId);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       // we have something called this.props.products
       // console.log('In render, props =', this.props)
@@ -598,12 +609,15 @@ function (_React$Component) {
             to: "/products/".concat(product.id)
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, product.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
             src: product.imageUrl
-          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, product.inventory))), _this.props.user.isAdmin === true ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, product.inventory))), _this2.props.user.isAdmin === true ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
             to: "/products/".concat(product.id),
             productId: product.id
           }, "EDIT") : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, product.inventory > 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-            type: "submit"
-          }, "ADD TO CART")) : 'sorry, out of space-stock!'))
+            type: "button",
+            onClick: function onClick() {
+              _this2.addToCart(_this2.props.user.id, product.id);
+            }
+          }, "ADD TO CART")) : 'Sorry, out of space-stock!'))
         );
       }));
     }
@@ -623,6 +637,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     getProducts: function getProducts() {
       dispatch(Object(_store_products__WEBPACK_IMPORTED_MODULE_3__["fetchProducts"])());
+    },
+    addItemToCart: function addItemToCart(userId, productId) {
+      dispatch(Object(_store_cart__WEBPACK_IMPORTED_MODULE_4__["addItemThunk"])(userId, productId));
     }
   };
 };
@@ -1305,7 +1322,7 @@ var processOrder = function processOrder(orderId, status, date) {
     }()
   );
 };
-var addItemThunk = function addItemThunk(itemId) {
+var addItemThunk = function addItemThunk(userId, productId) {
   return (
     /*#__PURE__*/
     function () {
@@ -1319,7 +1336,9 @@ var addItemThunk = function addItemThunk(itemId) {
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/cart/".concat(itemId));
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/cart/".concat(userId), {
+                  productId: productId
+                });
 
               case 3:
                 res = _context3.sent;
@@ -1362,8 +1381,9 @@ function cartReducer() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    // case ADD_ITEM:
-    //   return addToCart(state, item)
+    case ADD_ITEM:
+      return [].concat(_toConsumableArray(state), [action.payload]);
+
     case GET_ITEMS:
       return action.payload;
 

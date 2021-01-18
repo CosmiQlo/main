@@ -83,34 +83,47 @@ async function seed() {
     date: new Date(),
     total: 100.0
   })
-  const order2 = await Order.create({
-    status: 'pending',
-    date: new Date(),
-    total: 200.0
-  })
 
-  console.log(
-    'printing Order magic methods:',
-    Object.keys(Order.prototype)
-    // Object.keys(Order.prototype),
-    // Object.keys(orderProduct.prototype),
-    // Object.keys(User.prototype)
-  )
+  // console.log(
+  //   'printing Order magic methods:',
+  //   Object.keys(Order.prototype)
+  //   // Object.keys(Order.prototype),
+  //   // Object.keys(orderProduct.prototype),
+  //   // Object.keys(User.prototype)
+  // )
 
-  // user logs in, backend retrieves userId and all relevant user data
   const someUser = await User.findByPk(1)
-  // once user adds something to cart, create order
-  // BETTER: only create order when user hits "submit"
-  // redux state that is keeping track of what products are in the cart, so we know what to send when the user hits submit
 
-  // PAUSE HERE
   await someUser.addOrder(order1)
 
   const product1 = await Product.findByPk(1)
   const product2 = await Product.findByPk(2)
   await order1.addProducts([product1, product2])
 
-  console.log('order 1 with products added:', await order1.getProducts())
+  // updating orderProduct table for this fake order
+  const orderProductRow = await orderProduct.findOne({
+    where: {
+      productId: product1.id,
+      orderId: order1.id
+    }
+  })
+
+  orderProductRow.quantity = 1
+  orderProductRow.price = product1.price
+  await orderProductRow.save()
+
+  const orderProductRow2 = await orderProduct.findOne({
+    where: {
+      productId: product2.id,
+      orderId: order1.id
+    }
+  })
+
+  orderProductRow2.quantity = 1
+  orderProductRow2.price = product2.price
+  await orderProductRow2.save()
+
+  // console.log('order 1 with products added:', await order1.getProducts())
 
   // const someUser = await User.findByPk(1)
   // // console.log('here is someUser before we add an order:', someUser)

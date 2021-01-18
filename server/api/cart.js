@@ -1,8 +1,9 @@
 const router = require('express').Router()
 // const {Product} = require('../db/models/product')
+const Product = require('../db/models/product')
 const Order = require('../db/models/order')
 const User = require('../db/models/user')
-const orderProducts = require('../db/models/orderProduct')
+const orderProduct = require('../db/models/orderProduct')
 
 //GET/api/cart/userId - gets us the products in the order that is pending (there should only be one pending order, because we don't have a feature where someone can build multiple carts
 //returns an array of the products in that order
@@ -28,19 +29,68 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-//ADD/api/cart - adds an item to cart
-router.post('/', async (req, res, next) => {
+//ADD/api/cart/:userId - adds an item to active user's cart
+router.post('/:userId', async (req, res, next) => {
   try {
-    const item = await Order.create(
-      // {
-      // status: req.body.status,
-      // date: req.body.date,
-      // total: req.body.total,
-      // userId:req.body.userId
-      // }
-      req.body
-    )
-    res.json(item)
+    const userId = parseInt(req.params.userId)
+    const productId = parseInt(req.body.productId)
+    const currentUser = await User.findByPk(userId)
+    const productToAdd = await Product.findByPk(productId)
+
+    let pendingOrders = await currentUser.getOrders({
+      where: {
+        status: 'pending'
+      }
+    })
+
+    let thisOrderId = 0
+
+    if (!pendingOrders.length) {
+      // if User does not currently have any active orders, create a new one and add this product to it:
+      console.log(
+        '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>this user has no pending orders'
+      )
+      let newOrder = await Order.create({
+        status: 'pending',
+        date: new Date(),
+        total: productToAdd.price
+      })
+      await newOrder.addProduct(productToAdd)
+      await currentUser.addOrder(newOrder)
+      thisOrderId = newOrder.id
+    } else {
+      // isolate the active order and add this product to it:
+      let currentOrder = pendingOrders[0]
+
+      // check to see if this user ALREADY has one of these items in their order...
+      let productAlreadyInOrder = currentOrder.getProducts({
+        where: {
+          id: productId
+        }
+      })
+      if (!productAlreadyInOrder.length) {
+        // product is not in the order yet
+        await currentOrder.addProduct(productToAdd)
+        currentOrder.total += productToAdd.price
+        await currentOrder.save()
+      }
+      thisOrderId = currentOrder.id
+    }
+    let currentOrderProductRow = await orderProduct.findOne({
+      where: {
+        orderId: thisOrderId,
+        productId: productId
+      }
+    })
+    if (currentOrderProductRow.quantity) {
+      currentOrderProductRow.quantity++
+    } else {
+      currentOrderProductRow.quantity = 1
+    }
+    currentOrderProductRow.price = productToAdd.price
+    // console.log('NOW currentOPR:', currentOrderProductRow)
+    await currentOrderProductRow.save()
+    res.sendStatus(200)
   } catch (error) {
     next(error)
   }
