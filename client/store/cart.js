@@ -61,10 +61,10 @@ export const processOrder = (orderId, status, date) => async dispatch => {
   }
 }
 
-export const addItemThunk = itemId => async dispatch => {
+export const addItemThunk = (userId, productId) => async dispatch => {
   try {
     //check if itemId already exists - *****COME BACK HERE FIRST AFTER SETTING UP BACKEND******
-    const res = await axios.post(`/api/cart/${itemId}`)
+    const res = await axios.post(`/api/cart/${userId}`, {productId})
     dispatch(addItem(res.data))
   } catch (err) {
     console.error(err)
@@ -84,8 +84,8 @@ for remove -
 /*** REDUCERS ***/
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
-    // case ADD_ITEM:
-    //   return addToCart(state, item)
+    case ADD_ITEM:
+      return [...state, action.payload]
     case GET_ITEMS:
       return action.payload
     case ORDER_ITEMS:

@@ -34,6 +34,15 @@ export const fetchSpecificStyleProducts = style => async dispatch => {
   }
 }
 
+export const removeProduct = productId => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/products/${productId}`)
+    dispatch(getProducts(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 /*** REDUCERS ***/
 export default function productsReducer(state = initialState, action) {
   switch (action.type) {
