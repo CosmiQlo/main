@@ -77,6 +77,19 @@ export const addItemThunk = (userId, productId) => async dispatch => {
   }
 }
 
+export const removeAll = (userId, productId) => async dispatch => {
+  try {
+    await axios.put(`/api/cart/remove/item/${userId}`, {
+      productId
+    })
+    const res = await axios.get(`/api/cart/${userId}`)
+    // res.data is an array of items (the products in the order)
+    dispatch(getItems(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 //thunk for the POST - adding a new item to the cart - it should go find the item in the Products list by ID and add one to the item.quantity
 
 /*

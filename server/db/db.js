@@ -15,9 +15,9 @@ const db = new Sequelize(
     // protocol: 'postgres',
     // dialectOptions: {
     //   ssl: {
-    //     rejectUnauthorized: false,
-    //   },
-    // },
+    //     rejectUnauthorized: false
+    //   }
+    // }
     // code above is what I added^^^
   }
 )
