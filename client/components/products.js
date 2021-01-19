@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 
 import {fetchProducts} from '../store/products'
 import {addItemThunk} from '../store/cart'
+import {fetchGuestProduct} from '../store/guestCart'
 
 import './products.css'
 
@@ -11,6 +12,7 @@ export class Products extends React.Component {
   constructor() {
     super()
     this.addToCart = this.addToCart.bind(this)
+    this.addToGuestCart = this.addToGuestCart.bind(this)
   }
   componentDidMount() {
     this.props.getProducts()
@@ -19,7 +21,9 @@ export class Products extends React.Component {
   addToCart(userId, productId) {
     this.props.addItemToCart(userId, productId)
   }
-
+  addToGuestCart(productId) {
+    this.props.addItemToGuestCart(productId)
+  }
   render() {
     // we have something called this.props.products
     // console.log('In render, props =', this.props)
@@ -42,7 +46,7 @@ export class Products extends React.Component {
                     productId={product.id}
                     className="buy_button"
                   >
-                    {/*comment out productId?*/}
+                    {/* comment out productId? */}
                     EDIT
                   </Link>
                 ) : product.inventory > 0 ? (
@@ -50,7 +54,11 @@ export class Products extends React.Component {
                     type="button"
                     className="buy_button"
                     onClick={() => {
-                      this.addToCart(this.props.user.id, product.id)
+                      if (!this.props.user.id) {
+                        this.addToGuestCart(product.id)
+                      } else {
+                        this.addToCart(this.props.user.id, product.id)
+                      }
                     }}
                   >
                     ADD TO CART
@@ -81,6 +89,9 @@ const mapDispatchToProps = dispatch => {
     },
     addItemToCart: (userId, productId) => {
       dispatch(addItemThunk(userId, productId))
+    },
+    addItemToGuestCart: productId => {
+      dispatch(fetchGuestProduct(productId))
     }
   }
 }
