@@ -487,6 +487,7 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Cart).call(this, props));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.addOneToCart = _this.addOneToCart.bind(_assertThisInitialized(_this));
+    _this.removeAllOfOneItem = _this.removeAllOfOneItem.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -499,6 +500,11 @@ function (_Component) {
     key: "addOneToCart",
     value: function addOneToCart(userId, productId) {
       this.props.addToCart(userId, productId);
+    }
+  }, {
+    key: "removeAllOfOneItem",
+    value: function removeAllOfOneItem(userId, productId) {
+      this.props.removeAllFromCart(userId, productId);
     } //show the alerbox for now
 
   }, {
@@ -592,7 +598,10 @@ function (_Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-trash"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          type: "button"
+          type: "button",
+          onClick: function onClick() {
+            _this2.removeAllOfOneItem(_this2.props.user.id, item.id);
+          }
         }, "Remove Item")));
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "cs_right"
@@ -626,6 +635,9 @@ var mapDispatch = function mapDispatch(dispatch) {
     },
     addToCart: function addToCart(userId, productId) {
       dispatch(Object(_store_cart__WEBPACK_IMPORTED_MODULE_3__["addItemThunk"])(userId, productId));
+    },
+    removeAllFromCart: function removeAllFromCart(userId, productId) {
+      dispatch(Object(_store_cart__WEBPACK_IMPORTED_MODULE_3__["removeAll"])(userId, productId));
     }
   };
 };
@@ -1942,7 +1954,7 @@ function usersReducer() {
 /*!******************************!*\
   !*** ./client/store/cart.js ***!
   \******************************/
-/*! exports provided: fetchItems, processOrder, addItemThunk, default */
+/*! exports provided: fetchItems, processOrder, addItemThunk, removeAll, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1950,6 +1962,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchItems", function() { return fetchItems; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "processOrder", function() { return processOrder; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addItemThunk", function() { return addItemThunk; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeAll", function() { return removeAll; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return cartReducer; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -2150,6 +2163,54 @@ var addItemThunk = function addItemThunk(userId, productId) {
 
       return function (_x3) {
         return _ref3.apply(this, arguments);
+      };
+    }()
+  );
+};
+var removeAll = function removeAll(userId, productId) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref4 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4(dispatch) {
+        var res;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/cart/remove/item/".concat(userId), {
+                  productId: productId
+                });
+
+              case 3:
+                _context4.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/cart/".concat(userId));
+
+              case 5:
+                res = _context4.sent;
+                // res.data is an array of items (the products in the order)
+                dispatch(getItems(res.data));
+                _context4.next = 12;
+                break;
+
+              case 9:
+                _context4.prev = 9;
+                _context4.t0 = _context4["catch"](0);
+                console.error(_context4.t0);
+
+              case 12:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, null, [[0, 9]]);
+      }));
+
+      return function (_x4) {
+        return _ref4.apply(this, arguments);
       };
     }()
   );

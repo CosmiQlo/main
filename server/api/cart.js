@@ -98,22 +98,35 @@ router.post('/:userId', async (req, res, next) => {
     next(error)
   }
 })
-// let potentialReturnVal = await Product.findOne({
-//   where: {
-//     id: productId,
-//   },
-//   include: [
-//     {
-//       model: Order,
-//       where: {
-//         id: thisOrderId,
-//       },
-//     },
-//   ],
-// })
-// console.log('is this what we want to return?', potentialReturnVal)
-// res.sendStatus(200)
-// res.json(potentialReturnVal)
+
+//ADD/api/cart/remove/item/:userId - adds an item to active user's cart
+router.put('/remove/item/:userId', async (req, res, next) => {
+  try {
+    const userId = parseInt(req.params.userId)
+    const productId = parseInt(req.body.productId)
+    const currentUser = await User.findByPk(userId)
+
+    let pendingOrders = await currentUser.getOrders({
+      where: {
+        status: 'pending'
+      }
+    })
+    let currentOrder = pendingOrders[0]
+
+    const thisOrderId = currentOrder.id
+
+    await orderProduct.destroy({
+      where: {
+        orderId: thisOrderId,
+        productId: productId
+      }
+    })
+
+    res.sendStatus(200)
+  } catch (error) {
+    next(error)
+  }
+})
 
 /*
 //deleteOne/api/cart - deletes ONE item to cart

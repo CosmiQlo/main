@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchItems, addItemThunk, processOrder} from '../store/cart'
+import {fetchItems, addItemThunk, removeAll, processOrder} from '../store/cart'
 //import {processOrder} from '../store/cart'
 import './cart.css'
 
@@ -11,6 +11,7 @@ export class Cart extends Component {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.addOneToCart = this.addOneToCart.bind(this)
+    this.removeAllOfOneItem = this.removeAllOfOneItem.bind(this)
   }
   componentDidMount() {
     this.props.getItems(this.props.user.id)
@@ -18,6 +19,9 @@ export class Cart extends Component {
 
   addOneToCart(userId, productId) {
     this.props.addToCart(userId, productId)
+  }
+  removeAllOfOneItem(userId, productId) {
+    this.props.removeAllFromCart(userId, productId)
   }
   //show the alerbox for now
   async handleSubmit(event) {
@@ -75,7 +79,17 @@ export class Cart extends Component {
                         </p>
                         <p className="deletebutton">
                           <i className="fas fa-trash" />
-                          <button type="button">Remove Item</button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              this.removeAllOfOneItem(
+                                this.props.user.id,
+                                item.id
+                              )
+                            }}
+                          >
+                            Remove Item
+                          </button>
                         </p>
                       </div>
                     )
@@ -123,6 +137,9 @@ const mapDispatch = dispatch => {
     },
     addToCart: (userId, productId) => {
       dispatch(addItemThunk(userId, productId))
+    },
+    removeAllFromCart: (userId, productId) => {
+      dispatch(removeAll(userId, productId))
     }
   }
 }
