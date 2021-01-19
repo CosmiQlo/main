@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchItems, processOrder} from '../store/cart'
+import {fetchItems, addItemThunk, processOrder} from '../store/cart'
 //import {processOrder} from '../store/cart'
 import './cart.css'
 
@@ -10,9 +10,14 @@ export class Cart extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.addOneToCart = this.addOneToCart.bind(this)
   }
   componentDidMount() {
     this.props.getItems(this.props.user.id)
+  }
+
+  addOneToCart(userId, productId) {
+    this.props.addToCart(userId, productId)
   }
   //show the alerbox for now
   async handleSubmit(event) {
@@ -58,7 +63,14 @@ export class Cart extends Component {
                           Qty:{item.orderProduct.quantity}
                         </p>
                         <p className="addremovebuttons">
-                          <button type="button">Add</button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              this.addOneToCart(this.props.user.id, item.id)
+                            }}
+                          >
+                            Add
+                          </button>
                           <button type="button">Remove</button>
                         </p>
                         <p className="deletebutton">
@@ -108,6 +120,9 @@ const mapDispatch = dispatch => {
     },
     orderItems: (orderId, status, date) => {
       dispatch(processOrder(orderId, status, date))
+    },
+    addToCart: (userId, productId) => {
+      dispatch(addItemThunk(userId, productId))
     }
   }
 }
