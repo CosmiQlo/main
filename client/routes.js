@@ -9,7 +9,8 @@ import {
   Products,
   singleProduct,
   CartPage,
-  UpdateProduct
+  UpdateProduct,
+  GuestCart
 } from './components'
 import AllUsers from './components/AllUsers'
 import {me} from './store'
@@ -36,7 +37,7 @@ class Routes extends Component {
         <Route path="/cart" component={CartPage} />
         <Route path="/products/:productId/update" component={UpdateProduct} />
         <Route path="/users" component={AllUsers} />
-
+        <Route path="/guestCart" component={GuestCart} />
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
