@@ -4,13 +4,27 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 1rem;
+  padding: 1rem;
   z-index: 50;
+}
+
+.navBar_logo {
+  height: 50px;
+  width: 50px;
+}
+
+.navBar_name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  padding: 10px;
 }
 
 .navBar_name a {
   outline: none;
   text-decoration: none;
+  padding: 10px;
 }
 
 .navBar_name a:visited {
@@ -22,6 +36,7 @@
   color: #dfdfdf;
   font-size: 1.4rem;
   cursor: pointer;
+  align-items: center;
 }
 
 .navBar_links {

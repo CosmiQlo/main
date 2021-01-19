@@ -8,6 +8,7 @@ import './navbar.css'
 const Navbar = ({handleClick, isLoggedIn, user}) => (
   <div className="navBar">
     <div className="navBar_name">
+      <img src="/images/logo.png" className="navBar_logo" />
       <Link to="/home">
         <h2>CosmiQlo</h2>
       </Link>
