@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchItems, processOrder} from '../store/cart'
 //import {processOrder} from '../store/cart'
+import './cart.css'
 
 // we ONLY RENDER this component if we have user on state. The statement in user-home.js makes sure this is true.
 export class Cart extends Component {
@@ -35,50 +36,60 @@ export class Cart extends Component {
     console.log('cart props:', this.props.cart)
     return (
       <form onSubmit={this.handleSubmit}>
-        <div id="myCart">
-          <h1>My Cart</h1>
-          <div>
-            {!this.props.user.id ? (
-              <div>Loading your cart...</div>
-            ) : (
-              <div>
-                {this.props.cart.map(item => {
-                  return (
-                    <div key={item.id}>
-                      <Link to={`/products/${item.id}`}>
-                        <h3>Item: {item.name}</h3>
-                      </Link>
-                      <p>
-                        <img src={`${item.imageUrl}`} />
-                      </p>
-                      <p>Price: {item.price}</p>
-                      {/* <div>
-                        {!item.orderProduct ? (
-                          <p>Fetching quantity!</p>
-                        ) : ( */}
-                      <p>
-                        Qty:{item.orderProduct.quantity}
-                        <button type="button">add</button>
-                        <button type="button">remove</button>
-                      </p>
-                      {/* )}
-                      </div> */}
-                      <button type="button">Remove Item</button>
-                    </div>
-                  )
-                })}
-              </div>
-            )}
+        <div className="cartscreen">
+          <div className="cs_title">
+            <h2>My Cart</h2>
           </div>
-          <button type="submit">Place Order</button>
+          <div className="cs_main">
+            <div className="cs_left">
+              {!this.props.user.id ? (
+                <div>Loading your cart...</div>
+              ) : (
+                <div className="cs_items">
+                  {this.props.cart.map(item => {
+                    return (
+                      <div key={item.id} className="cs_item">
+                        <Link to={`/products/${item.id}`}>
+                          <img src={`${item.imageUrl}`} />
+                        </Link>
+                        <p className="ci_name">{item.name}</p>
+                        <p className="ci_price">$ {item.price}</p>
+                        <p className="ci_quantity">
+                          Qty:{item.orderProduct.quantity}
+                        </p>
+                        <p className="addremovebuttons">
+                          <button type="button">Add</button>
+                          <button type="button">Remove</button>
+                        </p>
+                        <p className="deletebutton">
+                          <i className="fas fa-trash" />
+                          <button type="button">Remove Item</button>
+                        </p>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
+            <div className="cs_right">
+              <div className="cs_info">
+                <p>
+                  Total Price($):{' '}
+                  {this.props.cart.reduce(
+                    (acc, item) =>
+                      acc + item.orderProduct.quantity * item.price,
+                    0
+                  )}
+                </p>
+              </div>
+              <div>
+                <button type="submit">Checkout</button>
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     )
-    //add a table -
-    //the item name, quantity, price, + button, - button, remove all button
-    //tax - math problem - for now we'll assume a constant
-    //final cost
-    //checkout button
   }
 }
 

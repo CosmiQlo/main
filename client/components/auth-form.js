@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {Link} from 'react-router-dom'
+import './auth-form.css'
 
 /**
  * COMPONENT
@@ -12,32 +14,37 @@ const AuthForm = props => {
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
-        <div>
-          {name === 'signup' ? (
-            <div>
-              <label htmlFor="name">
-                <small>Name</small>
-              </label>
-              <input name="userName" type="text" />
+        <div className="frontpage">
+          <div className="mainBox">
+            <div className="fillinBox">
+              {name === 'signup' ? (
+                <div className="choiceContainer">
+                  <label htmlFor="name">Name: </label>
+                  <input name="userName" type="text" />
+                </div>
+              ) : (
+                <div className="choiceContainer">
+                  <div>Have an Account? Log in:</div>
+                </div>
+              )}
+              <div className="email">
+                <label htmlFor="email">E-mail: </label>
+                <input name="email" type="text" />
+              </div>
+              <div className="pwd">
+                <label htmlFor="password">Password: </label>
+                <input name="password" type="password" />
+              </div>
             </div>
-          ) : (
-            <div />
-          )}
-        </div>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
+            <div className="enter" />
+            <button type="submit" className="enterbtn">
+              {displayName}
+            </button>
+            <div className="guestorSignup">
+              <Link to="/home">Continue as a guest user</Link>
+              <Link to="/signup">Sign Up</Link>
+            </div>
+          </div>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>

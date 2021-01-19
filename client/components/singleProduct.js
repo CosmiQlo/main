@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Cart from './cart'
+import './singleProduct.css'
 
 import {fetchSingleProduct} from '../store/singleProduct'
 import UpdateProduct from './updateProduct'
@@ -14,23 +15,41 @@ export class singleProduct extends React.Component {
     const product = this.props.singleProduct
     const id = this.props.match.params.productId
     return (
-      <div>
-        <h1>{product.name}</h1>
-        <h3>{product.price}</h3>
-        <p>{product.description}</p>
-        {this.props.user.isAdmin === true ? (
-          <UpdateProduct productId={id} />
-        ) : (
+      <div className="productscreen">
+        <div className="ps_left">
+          <img src={product.imageUrl} className="left_image" />
           <div>
-            {product.inventory > 0 ? (
-              <div>
-                <button type="submit">ADD TO CART</button>
-              </div>
-            ) : (
-              'sorry, out of space-stock!'
-            )}
+            <div className="left_info">
+              <p className="left_name">{product.name}</p>
+              <p className="left_description">{product.description}</p>
+              <p className="left_price">{product.price}</p>
+            </div>
           </div>
-        )}
+        </div>
+        <div className="ps_right">
+          <div className="right_info">
+            <p>
+              Price <span>{product.price}</span>
+            </p>
+            <p>
+              Status
+              {product.inventory > 0 ? (
+                <span>In Stock</span>
+              ) : (
+                <span>Sorry, out of space-stock!</span>
+              )}
+            </p>
+            <p>
+              {this.props.user.isAdmin === true ? (
+                <UpdateProduct productId={id} />
+              ) : product.inventory > 0 ? (
+                <button type="button">ADD TO CART</button>
+              ) : (
+                'sorry, out of space-stock!'
+              )}
+            </p>
+          </div>
+        </div>
       </div>
     )
   }

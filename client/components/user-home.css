@@ -1,0 +1,16 @@
+.homescreen {
+  max-width: 1300px;
+  margin: 1rem auto;
+}
+
+.hs_title {
+  font-size: 1.5rem;
+  color: #271033;
+  margin-bottom: 1rem;
+  margin-left: 8px;
+}
+
+.hs_products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}

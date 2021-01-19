@@ -1,0 +1,161 @@
+/* cart.css  */
+.cartscreen {
+  display: flex;
+  max-width: 1300px;
+  margin: 2rem auto;
+  flex-direction: column;
+}
+
+.cs_title h2 {
+  margin-bottom: 1rem;
+}
+
+.cs_main {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.cs_left {
+  flex: 0.8;
+  margin-right: 1rem;
+  background: #dfdfdf;
+  box-shadow: 0 1px 4px rgba(47, 17, 42, 0.4);
+  padding: 1rem;
+  height: fit-content;
+}
+
+.cs_right {
+  flex: 0.2;
+  background: #f0efef;
+  box-shadow: 0 1px 4px rgba(47, 17, 42, 0.4);
+  height: fit-content;
+}
+
+.cs_right > div {
+  border-bottom: 1px solid rgba(47, 17, 42, 0.2);
+  padding: 1rem;
+}
+
+.cs_right > div:last-child {
+  border: none;
+}
+
+.cs_info > p {
+  padding: 8px;
+  font-weight: bold;
+}
+
+.cs_right div button {
+  padding: 10px 17px;
+  width: 100%;
+  background: #271033;
+  color: #dfdfdf;
+  border: 1px solid #271033;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+.cs_right div button:hover {
+  background: #6610f2;
+  color: #dfdfdf;
+}
+
+.cs_right div button:active {
+  background-color: #271033;
+  box-shadow: 0 2px #666;
+  transform: translateY(3px);
+  outline: none;
+}
+
+.cs_items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 5px;
+  row-gap: 5px;
+}
+
+/* cartItem.css  */
+.cs_item {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 8px;
+  background: #f0efef;
+  border-radius: 2px;
+}
+
+.ci_name,
+.ci_price,
+.ci_quantity {
+  color: #271033;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.addremovebuttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+}
+
+.addremovebuttons button {
+  text-decoration: none;
+  text-align: center;
+  background: none;
+  color: #271033;
+  padding: 2px;
+  font-size: 1rem;
+  font-weight: bolder;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.addremovebuttons button:hover {
+  background: #6610f2;
+  color: #dfdfdf;
+}
+
+.addremovebuttons button:active {
+  background-color: #271033;
+  box-shadow: 0 2px #666;
+  transform: translateY(3px);
+  outline: none;
+}
+
+.fa-trash {
+  color: #92140c;
+  padding-right: 10px;
+  font-size: 2rem;
+}
+
+.deletebutton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px;
+}
+
+.deletebutton button {
+  padding: 5px;
+  font-size: 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #dfdfdf;
+  background: #6610f2;
+  border: 0px solid #271033;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+
+.deletebutton button:hover,
+.deletebutton button:focus,
+.deletebutton button:active {
+  background: #271033;
+  transform: scale(1.2);
+}
