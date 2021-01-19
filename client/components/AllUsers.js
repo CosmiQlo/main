@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchUsers} from '../store/AllUsers'
 import {Link} from 'react-router-dom'
+import './AllUsers.css'
 
 export class AllUsers extends React.Component {
   componentDidMount() {
@@ -11,11 +12,11 @@ export class AllUsers extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="userlist">
         {this.props.users.map(user => (
-          <div key={user.id}>
-            <p>User's name:{user.name}</p>
-            <p>User's email:{user.email}</p>
+          <div key={user.id} className="eachcell">
+            <p>Name:{user.name}</p>
+            <p>E-mail:{user.email}</p>
           </div>
         ))}
       </div>

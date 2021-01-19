@@ -5,6 +5,8 @@ import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/products'
 import {addItemThunk} from '../store/cart'
 
+import './products.css'
+
 export class Products extends React.Component {
   constructor() {
     super()
@@ -22,41 +24,41 @@ export class Products extends React.Component {
     // we have something called this.props.products
     // console.log('In render, props =', this.props)
     return (
-      <div>
+      <div className="all_products">
         {this.props.products.map(product => {
           return (
             // this could be where we make the product.name a LINK that goes to single product view, etc.
-            <div key={product.id}>
+            <div key={product.id} className="product">
               <Link to={`/products/${product.id}`}>
-                <div>
-                  <h1>{product.name}</h1>
-                  <img src={product.imageUrl} />
-                  <div>{product.inventory}</div>
-                </div>
+                <img src={product.imageUrl} />
               </Link>
-              {this.props.user.isAdmin === true ? (
-                <Link to={`/products/${product.id}`} productId={product.id}>
-                  {/*comment out productId?*/}
-                  EDIT
-                </Link>
-              ) : (
-                <div>
-                  {product.inventory > 0 ? (
-                    <div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          this.addToCart(this.props.user.id, product.id)
-                        }}
-                      >
-                        ADD TO CART
-                      </button>
-                    </div>
-                  ) : (
-                    'Sorry, out of space-stock!'
-                  )}
-                </div>
-              )}
+              <div className="product_info">
+                <p className="info_name">{product.name}</p>
+                <p className="info_descr">{product.description}</p>
+                <p className="info_price">{product.price}</p>
+                {this.props.user.isAdmin === true ? (
+                  <Link
+                    to={`/products/${product.id}`}
+                    productId={product.id}
+                    className="buy_button"
+                  >
+                    {/*comment out productId?*/}
+                    EDIT
+                  </Link>
+                ) : product.inventory > 0 ? (
+                  <button
+                    type="button"
+                    className="buy_button"
+                    onClick={() => {
+                      this.addToCart(this.props.user.id, product.id)
+                    }}
+                  >
+                    ADD TO CART
+                  </button>
+                ) : (
+                  'Sorry, out of space-stock!'
+                )}
+              </div>
             </div>
           )
         })}

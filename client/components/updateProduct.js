@@ -6,6 +6,7 @@ import {
   fetchSingleProduct
 } from '../store/singleProduct'
 import removeProduct from '../store/products'
+import './updateProduct.css'
 
 const defaultState = {
   name: '',
@@ -76,40 +77,42 @@ class UpdateProduct extends React.Component {
       <div>
         {' '}
         <form onSubmit={this.handleSubmit}>
-          <div>
-            <h2> Update this product:</h2>
-            {/* <ul>
-          <li>Name is required</li>
-        </ul> */}
-            <label htmlFor="name">Products's new name:</label>
-            <input
-              type="text"
-              name="name"
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
+          <div className="updatebox">
+            <div className="update_title">Update</div>
+            <div className="update_name">
+              <label htmlFor="name">Product Name:</label>
+              <input
+                type="text"
+                name="name"
+                value={this.state.name}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="update_price">
+              <label htmlFor="price">Price:</label>
+              <input
+                type="number"
+                name="price"
+                value={this.state.price}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="update_inventory">
+              <label htmlFor="inventory">Inventory:</label>
+              <input
+                type="number"
+                name="inventory"
+                value={this.state.inventory}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="update_description" />
+            <div className="updateBtn">
+              <button className="back" type="submit">
+                Update Product!
+              </button>
+            </div>
           </div>
-          <div>
-            <label htmlFor="price">Price:</label>
-            <input
-              type="number"
-              name="price"
-              value={this.state.price}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="inventory">inventory:</label>
-            <input
-              type="number"
-              name="inventory"
-              value={this.state.inventory}
-              onChange={this.handleChange}
-            />
-          </div>
-          <button className="back" type="submit">
-            Update Product!
-          </button>
         </form>
         {/* here we can implement delete button, doent work yet, but i already wrote a reducer and route on the back-end for that */}
         {/* <button className="del" onClick={() => this.handleRemove(this.props.singleProduct.id)} type="button" >X {this.props.singleProduct.name}</button> */}
