@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import './navbar.css'
 
-const Navbar = ({handleClick, isLoggedIn, user}) => (
+const Navbar = ({handleClick, isLoggedIn, user, cart}) => (
   <div className="navBar">
     <div className="navBar_name">
       <img src="/images/logo.png" className="navBar_logo" />
@@ -31,7 +31,12 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
             <Link to="/cart" className="cart_link">
               <i className="fas fa-shopping-cart" />
               Cart
-              <span className="cartTotal">0</span>
+              <span className="cartTotal">
+                {cart.reduce(
+                  (acc, item) => acc + item.orderProduct.quantity,
+                  0
+                )}
+              </span>
             </Link>
           )}
         </li>
@@ -45,9 +50,6 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
         <li>
           <Link to="/signup">Sign Up</Link>
         </li>
-        <li>
-          <Link to="/home">Continue as a guest user</Link>
-        </li>
       </ul>
     )}
   </div>
@@ -59,7 +61,8 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    user: state.user
+    user: state.user,
+    cart: state.cart
   }
 }
 

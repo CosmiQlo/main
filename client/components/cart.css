@@ -105,13 +105,15 @@
 .addremovebuttons button {
   text-decoration: none;
   text-align: center;
-  color: #dfdfdf;
-  background: #271033;
+  background: none;
+  color: #271033;
   padding: 2px;
-  border: 1px solid #271033;
   font-size: 1rem;
-  border-radius: 4px;
+  font-weight: bolder;
   outline: none;
+  border: none;
+  border-radius: 8px;
+  padding: 5px;
 }
 
 .addremovebuttons button:hover {

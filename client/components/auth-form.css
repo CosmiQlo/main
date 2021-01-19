@@ -33,6 +33,14 @@
   padding: 5px;
 }
 
+.choiceContainer,
+.email,
+.pwd {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .enterbtn {
   padding: 10px 17px;
   width: 50%;

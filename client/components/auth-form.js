@@ -16,23 +16,25 @@ const AuthForm = props => {
       <form onSubmit={handleSubmit} name={name}>
         <div className="frontpage">
           <div className="mainBox">
-            {name === 'signup' ? (
-              <div className="choiceContainer">
-                <label htmlFor="name">Name: </label>
-                <input name="userName" type="text" />
+            <div className="fillinBox">
+              {name === 'signup' ? (
+                <div className="choiceContainer">
+                  <label htmlFor="name">Name: </label>
+                  <input name="userName" type="text" />
+                </div>
+              ) : (
+                <div className="choiceContainer">
+                  <div>Have an Account? Log in:</div>
+                </div>
+              )}
+              <div className="email">
+                <label htmlFor="email">E-mail: </label>
+                <input name="email" type="text" />
               </div>
-            ) : (
-              <div className="choiceContainer">
-                <span>Have an account? Log in:</span>
+              <div className="pwd">
+                <label htmlFor="password">Password: </label>
+                <input name="password" type="password" />
               </div>
-            )}
-            <div className="email">
-              <label htmlFor="email">E-mail: </label>
-              <input name="email" type="text" />
-            </div>
-            <div className="pwd">
-              <label htmlFor="password">Password: </label>
-              <input name="password" type="password" />
             </div>
             <div className="enter" />
             <button type="submit" className="enterbtn">

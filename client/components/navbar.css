@@ -83,7 +83,13 @@
   color: #271033;
   display: flex;
   font-size: 1rem;
+  font-weight: bold;
   justify-content: center;
   text-align: center;
   align-content: center;
+}
+
+.cartTotal:hover {
+  background: #271033;
+  color: #dfdfdf;
 }

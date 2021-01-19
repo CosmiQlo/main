@@ -73,8 +73,14 @@ export class Cart extends Component {
             </div>
             <div className="cs_right">
               <div className="cs_info">
-                <p>Total Price: </p>
-                <p>Tax: </p>
+                <p>
+                  Total Price($):{' '}
+                  {this.props.cart.reduce(
+                    (acc, item) =>
+                      acc + item.orderProduct.quantity * item.price,
+                    0
+                  )}
+                </p>
               </div>
               <div>
                 <button type="submit">Checkout</button>
