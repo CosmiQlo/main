@@ -33,12 +33,12 @@ const Navbar = ({handleClick, isLoggedIn, user, cart, guestCart}) => (
             <Link to="/cart" className="cart_link">
               <i className="fas fa-shopping-cart" />
               Cart
-              <span className="cartTotal">
+              {/* <span className="cartTotal">
                 {cart.reduce(
                   (acc, item) => acc + item.orderProduct.quantity,
                   0
                 )}
-              </span>
+              </span> */}
             </Link>
           )}
         </li>
