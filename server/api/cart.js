@@ -4,10 +4,11 @@ const Product = require('../db/models/product')
 const Order = require('../db/models/order')
 const User = require('../db/models/user')
 const orderProduct = require('../db/models/orderProduct')
+const {isRightUser} = require('./middleware')
 
 //GET/api/cart/userId - gets us the products in the order that is pending (there should only be one pending order, because we don't have a feature where someone can build multiple carts
 //returns an array of the products in that order
-router.get('/:userId', async (req, res, next) => {
+router.get('/:userId', isRightUser, async (req, res, next) => {
   try {
     let userId = req.params.userId
     userId = parseInt(userId)
