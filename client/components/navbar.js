@@ -57,7 +57,7 @@ const Navbar = ({handleClick, isLoggedIn, user, cart, guestCart}) => (
           <Link to="/guestCart" className="cart_link">
             <i className="fas fa-shopping-cart" />
             Cart
-            <span className="cartTotal">0</span>
+            {/* <span className="cartTotal">0</span> */}
           </Link>
         </li>
       </ul>
