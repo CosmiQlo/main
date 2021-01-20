@@ -488,6 +488,7 @@ function (_Component) {
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.addOneToCart = _this.addOneToCart.bind(_assertThisInitialized(_this));
     _this.removeAllOfOneItem = _this.removeAllOfOneItem.bind(_assertThisInitialized(_this));
+    _this.removeOneItem = _this.removeOneItem.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -505,6 +506,11 @@ function (_Component) {
     key: "removeAllOfOneItem",
     value: function removeAllOfOneItem(userId, productId) {
       this.props.removeAllFromCart(userId, productId);
+    }
+  }, {
+    key: "removeOneItem",
+    value: function removeOneItem(userId, productId) {
+      this.props.removeOneFromCart(userId, productId);
     } //show the alerbox for now
 
   }, {
@@ -592,7 +598,10 @@ function (_Component) {
             _this2.addOneToCart(_this2.props.user.id, item.id);
           }
         }, "Add"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          type: "button"
+          type: "button",
+          onClick: function onClick() {
+            _this2.removeOneItem(_this2.props.user.id, item.id);
+          }
         }, "Remove")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "deletebutton"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
@@ -638,6 +647,9 @@ var mapDispatch = function mapDispatch(dispatch) {
     },
     removeAllFromCart: function removeAllFromCart(userId, productId) {
       dispatch(Object(_store_cart__WEBPACK_IMPORTED_MODULE_3__["removeAll"])(userId, productId));
+    },
+    removeOneFromCart: function removeOneFromCart(userId, productId) {
+      dispatch(Object(_store_cart__WEBPACK_IMPORTED_MODULE_3__["removeOne"])(userId, productId));
     }
   };
 };
@@ -1954,7 +1966,7 @@ function usersReducer() {
 /*!******************************!*\
   !*** ./client/store/cart.js ***!
   \******************************/
-/*! exports provided: fetchItems, processOrder, addItemThunk, removeAll, default */
+/*! exports provided: fetchItems, processOrder, addItemThunk, removeAll, removeOne, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1963,6 +1975,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "processOrder", function() { return processOrder; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addItemThunk", function() { return addItemThunk; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeAll", function() { return removeAll; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeOne", function() { return removeOne; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return cartReducer; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -2013,20 +2026,6 @@ var orderItems = function orderItems(orderId, status, date) {
     payload: orderId,
     status: status,
     date: date
-  };
-};
-
-var removeItem = function removeItem(item) {
-  return {
-    type: REMOVE_ITEM,
-    payload: item
-  };
-};
-
-var removeAllItems = function removeAllItems(items) {
-  return {
-    type: REMOVE_ALL_ITEMS,
-    payload: items
   };
 };
 /*** THUNK CREATOR ***/
@@ -2181,8 +2180,8 @@ var removeAll = function removeAll(userId, productId) {
               case 0:
                 _context4.prev = 0;
                 _context4.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/cart/remove/item/".concat(userId), {
-                  productId: productId
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/cart/remove/items/".concat(productId), {
+                  userId: userId
                 });
 
               case 3:
@@ -2211,6 +2210,54 @@ var removeAll = function removeAll(userId, productId) {
 
       return function (_x4) {
         return _ref4.apply(this, arguments);
+      };
+    }()
+  );
+};
+var removeOne = function removeOne(userId, productId) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref5 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee5(dispatch) {
+        var res;
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.prev = 0;
+                _context5.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/cart/remove/item/".concat(productId), {
+                  userId: userId
+                });
+
+              case 3:
+                _context5.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/cart/".concat(userId));
+
+              case 5:
+                res = _context5.sent;
+                // res.data is an array of items (the products in the order)
+                dispatch(getItems(res.data));
+                _context5.next = 12;
+                break;
+
+              case 9:
+                _context5.prev = 9;
+                _context5.t0 = _context5["catch"](0);
+                console.error(_context5.t0);
+
+              case 12:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, null, [[0, 9]]);
+      }));
+
+      return function (_x5) {
+        return _ref5.apply(this, arguments);
       };
     }()
   );
@@ -46790,7 +46837,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -99,11 +99,11 @@ router.post('/:userId', async (req, res, next) => {
   }
 })
 
-//ADD/api/cart/remove/item/:userId - adds an item to active user's cart
-router.put('/remove/item/:userId', async (req, res, next) => {
+//ADD/api/cart/remove/items/:productId - adds an item to active user's cart
+router.put('/remove/items/:productId', async (req, res, next) => {
   try {
-    const userId = parseInt(req.params.userId)
-    const productId = parseInt(req.body.productId)
+    const productId = parseInt(req.params.productId)
+    const userId = parseInt(req.body.userId)
     const currentUser = await User.findByPk(userId)
 
     let pendingOrders = await currentUser.getOrders({
@@ -121,6 +121,41 @@ router.put('/remove/item/:userId', async (req, res, next) => {
         productId: productId
       }
     })
+
+    res.sendStatus(200)
+  } catch (error) {
+    next(error)
+  }
+})
+
+//remove One Item from the cart
+router.put('/remove/item/:productId', async (req, res, next) => {
+  try {
+    const productId = parseInt(req.params.productId)
+    const userId = parseInt(req.body.userId)
+    const currentUser = await User.findByPk(userId)
+
+    let pendingOrders = await currentUser.getOrders({
+      where: {
+        status: 'pending'
+      }
+    })
+    let currentOrder = pendingOrders[0]
+
+    const thisOrderId = currentOrder.id
+
+    const itemQtyToBeReduced = await orderProduct.findOne({
+      where: {
+        orderId: thisOrderId,
+        productId: productId
+      }
+    })
+    if (itemQtyToBeReduced.quantity === 1) {
+      await itemQtyToBeReduced.destroy()
+    } else {
+      itemQtyToBeReduced.quantity--
+      await itemQtyToBeReduced.save()
+    }
 
     res.sendStatus(200)
   } catch (error) {

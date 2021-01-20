@@ -1,7 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchItems, addItemThunk, removeAll, processOrder} from '../store/cart'
+import {
+  fetchItems,
+  addItemThunk,
+  removeAll,
+  removeOne,
+  processOrder
+} from '../store/cart'
 //import {processOrder} from '../store/cart'
 import './cart.css'
 
@@ -12,6 +18,7 @@ export class Cart extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.addOneToCart = this.addOneToCart.bind(this)
     this.removeAllOfOneItem = this.removeAllOfOneItem.bind(this)
+    this.removeOneItem = this.removeOneItem.bind(this)
   }
   componentDidMount() {
     this.props.getItems(this.props.user.id)
@@ -22,6 +29,9 @@ export class Cart extends Component {
   }
   removeAllOfOneItem(userId, productId) {
     this.props.removeAllFromCart(userId, productId)
+  }
+  removeOneItem(userId, productId) {
+    this.props.removeOneFromCart(userId, productId)
   }
   //show the alerbox for now
   async handleSubmit(event) {
@@ -75,7 +85,14 @@ export class Cart extends Component {
                           >
                             Add
                           </button>
-                          <button type="button">Remove</button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              this.removeOneItem(this.props.user.id, item.id)
+                            }}
+                          >
+                            Remove
+                          </button>
                         </p>
                         <p className="deletebutton">
                           <i className="fas fa-trash" />
@@ -140,6 +157,9 @@ const mapDispatch = dispatch => {
     },
     removeAllFromCart: (userId, productId) => {
       dispatch(removeAll(userId, productId))
+    },
+    removeOneFromCart: (userId, productId) => {
+      dispatch(removeOne(userId, productId))
     }
   }
 }
