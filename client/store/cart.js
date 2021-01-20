@@ -30,16 +30,6 @@ const orderItems = (orderId, status, date) => ({
   date
 })
 
-const removeItem = item => ({
-  type: REMOVE_ITEM,
-  payload: item
-})
-
-const removeAllItems = items => ({
-  type: REMOVE_ALL_ITEMS,
-  payload: items
-})
-
 /*** THUNK CREATOR ***/
 export const fetchItems = userId => async dispatch => {
   try {
@@ -79,8 +69,21 @@ export const addItemThunk = (userId, productId) => async dispatch => {
 
 export const removeAll = (userId, productId) => async dispatch => {
   try {
-    await axios.put(`/api/cart/remove/item/${userId}`, {
-      productId
+    await axios.put(`/api/cart/remove/items/${productId}`, {
+      userId
+    })
+    const res = await axios.get(`/api/cart/${userId}`)
+    // res.data is an array of items (the products in the order)
+    dispatch(getItems(res.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const removeOne = (userId, productId) => async dispatch => {
+  try {
+    await axios.put(`/api/cart/remove/item/${productId}`, {
+      userId
     })
     const res = await axios.get(`/api/cart/${userId}`)
     // res.data is an array of items (the products in the order)
