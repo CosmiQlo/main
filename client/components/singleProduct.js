@@ -5,12 +5,25 @@ import './singleProduct.css'
 
 import {fetchSingleProduct} from '../store/singleProduct'
 import UpdateProduct from './updateProduct'
+import {addItemThunk} from '../store/cart'
+import {fetchGuestProduct} from '../store/guestCart'
 
 export class singleProduct extends React.Component {
+  constructor() {
+    super()
+    this.addToCart = this.addToCart.bind(this)
+    this.addToGuestCart = this.addToGuestCart.bind(this)
+  }
   componentDidMount() {
     this.props.getProduct(this.props.match.params.productId)
   }
-
+  addToCart(userId, productId) {
+    console.log('in addtocart method!!!!')
+    this.props.addItemToCart(userId, productId)
+  }
+  addToGuestCart(productId) {
+    this.props.addItemToGuestCart(productId)
+  }
   render() {
     const product = this.props.singleProduct
     const id = this.props.match.params.productId
@@ -43,7 +56,18 @@ export class singleProduct extends React.Component {
               {this.props.user.isAdmin === true ? (
                 <UpdateProduct productId={id} />
               ) : product.inventory > 0 ? (
-                <button type="button">ADD TO CART</button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!this.props.user.id) {
+                      this.addToGuestCart(product.id)
+                    } else {
+                      this.addToCart(this.props.user.id, product.id)
+                    }
+                  }}
+                >
+                  ADD TO CART
+                </button>
               ) : (
                 'sorry, out of space-stock!'
               )}
@@ -66,6 +90,12 @@ const mapDispatchToProps = dispatch => {
   return {
     getProduct: productId => {
       dispatch(fetchSingleProduct(productId))
+    },
+    addItemToCart: (userId, productId) => {
+      dispatch(addItemThunk(userId, productId))
+    },
+    addItemToGuestCart: productId => {
+      dispatch(fetchGuestProduct(productId))
     }
   }
 }
