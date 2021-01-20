@@ -9,8 +9,8 @@ router.put('/:orderId', async (req, res, next) => {
     console.log('Current Order No', orderId)
     const order = await Order.findByPk(req.params.orderId)
     await order.update({
-      status: req.body.status,
-      date: req.body.date
+      status: 'complete',
+      date: new Date()
     })
     res.json(order)
   } catch (err) {

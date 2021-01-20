@@ -34,7 +34,7 @@ export class Cart extends Component {
     this.props.removeOneFromCart(userId, productId)
   }
   //show the alerbox for now
-  async handleSubmit(event) {
+  handleSubmit(event) {
     event.preventDefault()
     console.log('cart orderId', this.props.cart[0].orderProduct.orderId)
     const orderId = this.props.cart[0].orderProduct.orderId
@@ -42,10 +42,8 @@ export class Cart extends Component {
     try {
       //process the order- update Order table with
       //status="completed" and orderDate=today's date
-      await this.props.orderItems(orderId, 'complete', new Date())
+      this.props.orderItems(orderId, this.props.user.id)
       //clear the cart
-      this.props.getItems(this.props.user.id)
-      //update the produce inventory--decided not to take care of it now
     } catch (err) {
       console.log(err)
     }
