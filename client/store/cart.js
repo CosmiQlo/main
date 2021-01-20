@@ -41,13 +41,12 @@ export const fetchItems = userId => async dispatch => {
   }
 }
 
-export const processOrder = (orderId, status, date) => async dispatch => {
+export const processOrder = (orderId, userId) => async dispatch => {
   try {
-    const res = await axios.put(`/api/orders/${orderId}`, {
-      status: status,
-      date: date
-    })
-    dispatch(orderItems(res.data.id, res.data.status, res.data.date))
+    await axios.put(`/api/orders/${orderId}`)
+    const res = await axios.get(`/api/cart/${userId}`)
+    // res.data is an array of items (the products in the order)
+    dispatch(getItems(res.data))
   } catch (err) {
     console.log(err)
   }

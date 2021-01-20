@@ -4,9 +4,17 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import GuestCart from './guestCart'
+// import {fetchItems} from '../store/cart'
 import './navbar.css'
 
-const Navbar = ({handleClick, isLoggedIn, user, cart, guestCart}) => (
+const Navbar = ({
+  handleClick,
+  isLoggedIn,
+  user,
+  cart,
+  guestCart
+  // fetchAllItems,
+}) => (
   <div className="navBar">
     <div className="navBar_name">
       <img src="/images/logo.png" className="navBar_logo" />
@@ -33,12 +41,12 @@ const Navbar = ({handleClick, isLoggedIn, user, cart, guestCart}) => (
             <Link to="/cart" className="cart_link">
               <i className="fas fa-shopping-cart" />
               Cart
-              <span className="cartTotal">
+              {/* <span className="cartTotal">
                 {cart.reduce(
                   (acc, item) => acc + item.orderProduct.quantity,
                   0
                 )}
-              </span>
+              </span> */}
             </Link>
           )}
         </li>
@@ -82,6 +90,9 @@ const mapDispatch = dispatch => {
     handleClick() {
       dispatch(logout())
     }
+    // fetchAllItems(userId) {
+    //   dispatch(fetchItems(userId))
+    // },
   }
 }
 
