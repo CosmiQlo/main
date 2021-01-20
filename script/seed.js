@@ -75,6 +75,16 @@ async function seed() {
       price: 15.99,
       description:
         'Who know that jeans for outer space would be so affordable? Made of a material FAR more comfortable than denim!'
+    }),
+    Product.create({
+      name: 'Space crown',
+      imageUrl:
+        'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
+      inventory: 1000,
+      style: 'adults',
+      price: 15.99,
+      description:
+        'Pin the crown to your head or it will float away in zero gravity!'
     })
   ])
 
