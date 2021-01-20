@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {emptyCart} from '../store/guestCart'
+import {emptyCart, removeItem} from '../store/guestCart'
 //import {processOrder} from '../store/cart'
 import './cart.css'
 
@@ -43,13 +43,20 @@ export class GuestCart extends Component {
                       <p className="ci_name">{item.name}</p>
                       <p className="ci_price">$ {item.price}</p>
                       <p className="ci_quantity">Qty:1</p>
-                      <p className="addremovebuttons">
+                      {/* <p className="addremovebuttons">
                         <button type="button">Add</button>
                         <button type="button">Remove</button>
-                      </p>
+                      </p> */}
                       <p className="deletebutton">
                         <i className="fas fa-trash" />
-                        <button type="button">Remove Item</button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            this.props.removeOneItem(item.id)
+                          }}
+                        >
+                          Remove Item
+                        </button>
                       </p>
                     </div>
                   )
@@ -89,6 +96,9 @@ const mapDispatch = dispatch => {
   return {
     emptyGuestCart: () => {
       dispatch(emptyCart())
+    },
+    removeOneItem: productId => {
+      dispatch(removeItem(productId))
     }
   }
 }
