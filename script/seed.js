@@ -28,63 +28,256 @@ async function seed() {
 
   const products = await Promise.all([
     Product.create({
-      name: "Children's Space Suit",
-      imageUrl:
-        'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
+      name: 'Intergalactic Active Wear Onepiece',
+      imageUrl: 'images/active_outfit.jpg',
       inventory: 50,
+      style: 'adults',
+      price: 89.99,
+      description:
+        "The sun never sets on the outer rings of Saturn, which means it's always a good time to be at the gym, bulking up, in this adult jumpsuit."
+    }),
+    Product.create({
+      name: 'Alien Fan Matched Set',
+      imageUrl: 'images/alien_logo_outfit.jpg',
+      inventory: 20,
+      style: 'adults',
+      price: 79.99,
+      description:
+        "Show your extraterrestrial neighbors how much you admire them, by wearing their image. They'll love it, maybe!"
+    }),
+    Product.create({
+      name: 'Cosmic Cocktail Attire',
+      imageUrl: 'images/ballgown1.jpg',
+      inventory: 150,
+      style: 'adults',
+      price: 299.99,
+      description:
+        "Another weird office party at Moonbase 5991R3Z? You don't have to like your coworkers, but you'll definitely dazzle them in this getup."
+    }),
+    Product.create({
+      name: 'Black Tie Affair Gown',
+      imageUrl: 'images/ballgown2.jpg',
+      inventory: 20,
+      style: 'adults',
+      price: 499.99,
+      description:
+        "Are you hosting the Interstellar Music Awards Show? Don't even think of wearing something other than this."
+    }),
+    Product.create({
+      name: 'Business-Martian Suit',
+      imageUrl: 'images/business_suit.jpg',
+      inventory: 1000,
+      style: 'adults',
+      price: 89.99,
+      description:
+        "You COULD go to that job interview in your old suit...or you could wear this, and earn a promotion before you're even hired."
+    }),
+    Product.create({
+      name: 'Everyday Cape Look',
+      imageUrl: 'images/cape_outfit.jpg',
+      inventory: 1500,
+      style: 'adults',
+      price: 69.99,
+      description:
+        "Finally, an outfit that is both highly reflective AND makes you look like you are an ice-pack inside of an earthling's lunchbox."
+    }),
+    Product.create({
+      name: 'Casual Shift Dress',
+      imageUrl: 'images/casual_dress.jpg',
+      inventory: 3500,
+      style: 'adults',
+      price: 49.99,
+      description:
+        'Is it shapeless? Yes. Is it functional? You bet. Go on, buy eight of them.'
+    }),
+    Product.create({
+      name: 'Sleek Everyday Ensemble',
+      imageUrl: 'images/chic_shirt_pants.jpg',
+      inventory: 1000,
+      style: 'adults',
+      price: 39.99,
+      description:
+        "Sunglasses not included in the outfit. But this model's swagger absolutely is."
+    }),
+    Product.create({
+      name: 'Retro Spacesuit',
+      imageUrl: 'images/classic_mens.jpg',
+      inventory: 3500,
+      style: 'adults',
+      price: 99.99,
+      description:
+        'Obviously, because of the advancement in atmospherization, humans no longer need suits like this to chill up here in space. But sometimes, you gotta rock that throw-back look.'
+    }),
+    Product.create({
+      name: 'High-Fashion Globe Outfit',
+      imageUrl: 'images/classic.jpg',
+      inventory: 1500,
+      style: 'adults',
+      price: 659.99,
+      description:
+        'You think you look good now? Just wait until you see yourself inside these conjoined fishbowls.'
+    }),
+    Product.create({
+      name: 'Trio Of Power Looks',
+      imageUrl: 'images/cut_right.jpg',
+      inventory: 500,
+      style: 'adults',
+      price: 4399.99,
+      description:
+        'Three unique looks that transition you from day-to-night--or, as those of us who live on the dark side of the Moon call them, night-to-even-more-night.'
+    }),
+    Product.create({
+      name: 'Eye-Catching Minidress',
+      imageUrl: 'images/full_cover_white.jpg',
+      inventory: 200,
+      style: 'adults',
+      price: 29.99,
+      description:
+        'You may think, "This outfit will make me look like my head is one big eyeball." And our response to that is, "Yes, and you\'re very welcome."'
+    }),
+    Product.create({
+      name: 'Head-To-Toe Chic',
+      imageUrl: 'images/full_dress_outfit.jpg',
+      inventory: 100,
+      style: 'adults',
+      price: 120.99,
+      description:
+        'We did all the work for you, assembling this one--all you have to do is put it on and get ready to accept compliments.'
+    }),
+    Product.create({
+      name: 'Ready-For-Anything Jumpsuit',
+      imageUrl: 'images/jumpsuit.jpg',
+      inventory: 1900,
+      style: 'adults',
+      price: 75.99,
+      description:
+        'You are not required to wear your hair like this in order to wear this piece but, honestly, we recommend it.'
+    }),
+    Product.create({
+      name: 'Tot Helmet',
+      imageUrl: 'images/kids1.jpg',
+      inventory: 800,
+      style: 'kids',
+      price: 19.99,
+      description:
+        'Your kid will look darling in this--but also, the helmet is entirely soundproof. Pop this bad boy on mid-tantrum and keep on stargazing, honey.'
+    }),
+    Product.create({
+      name: 'XTREME Kiddo Headset',
+      imageUrl: 'images/kids2.jpg',
+      inventory: 300,
       style: 'kids',
       price: 49.99,
       description:
-        'Send your child to Moon school in this stylish, breathable onesie!'
+        "Ever wanted your offspring to look more like an insect while they listen to thier space jams? We've got you covered."
     }),
     Product.create({
-      name: 'Space suit wedding dress',
-      imageUrl:
-        'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
-      inventory: 20,
-      style: 'adults',
-      price: 1099.99,
+      name: "Children's Wearable Sleeping Bag",
+      imageUrl: 'images/kids3.jpg',
+      inventory: 900,
+      style: 'kids',
+      price: 59.99,
       description:
-        'The only article of clothing appropriate for a destination wedding on Mars.'
+        "Don't think twice about zipping your little one into this garment--the eye panels do, in fact, allow your child to see out!"
     }),
     Product.create({
-      name: 'Sports uniform',
-      imageUrl:
-        'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
-      inventory: 150,
+      name: 'Sibling Explorer Getup',
+      imageUrl: 'images/kids4.jpg',
+      inventory: 300,
+      style: 'kids',
+      price: 99.99,
+      description:
+        "Be honest--if you had more than one kid, you did it partly so you could dress them in matching clothes. We don't judge. Scratch that itch."
+    }),
+    Product.create({
+      name: 'Plaid Mini Moonwalker Dress',
+      imageUrl: 'images/kids5.jpg',
+      inventory: 100,
       style: 'kids',
       price: 29.99,
       description:
-        'A stylish and practical sports outfit for your child who plays contact sports on the moon.'
+        "Who says you can't explore in a dress? This one is made of an untearable fabric. Really. It cannot be torn, and we do not fully understand how that is, or whether it's safe."
     }),
     Product.create({
-      name: 'Space Pajamas',
-      imageUrl:
-        'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
-      inventory: 30,
+      name: 'Flower Girl Outfit',
+      imageUrl: 'images/kids6.jpg',
+      inventory: 100,
+      style: 'kids',
+      price: 89.99,
+      description:
+        "You got guilted into asking your sister's daughter to be the flower girl at your wedding, so you might as well give her something fabulous to wear."
+    }),
+    Product.create({
+      name: 'Motherboard Dress',
+      imageUrl: 'images/long_dress.jpg',
+      inventory: 400,
+      style: 'adults',
+      price: 109.99,
+      description:
+        "Computers got us to the Moon, so it's high time we paid homage to them by wearing patterns inspired by their circuitry."
+    }),
+    Product.create({
+      name: 'Nebula Dress',
+      imageUrl: 'images/silver_dress.jpg',
+      inventory: 1400,
+      style: 'adults',
+      price: 189.99,
+      description:
+        "This one's a showstopper, but we are legally required to warn all potential buyers that there are exactly zero armholes in this thing."
+    }),
+    Product.create({
+      name: 'Geometric Sculpture Gown',
+      imageUrl: 'images/shoulder_short_dress.jpg',
+      inventory: 100,
+      style: 'adults',
+      price: 1999.99,
+      description:
+        'For the occasion when you want a silhouette that is less distinctly humanoid and more abstractly polygonal.'
+    }),
+    Product.create({
+      name: 'Off-The-Shoulder Wrap',
+      imageUrl: 'images/short_dress.jpg',
+      inventory: 50,
+      style: 'adults',
+      price: 79.99,
+      description:
+        'Wear this one on eclipse day for a wicked asymmetrical tanline.'
+    }),
+    Product.create({
+      name: 'Punk-Rock Neptune Streetwear',
+      imageUrl: 'images/punk_dress.jpg',
+      inventory: 200,
       style: 'adults',
       price: 39.99,
-      description: 'Everyone needs something to sleep in, even in zero-gravity!'
+      description:
+        "Because of Neptune's irradiated atmosphere, you've got to dress in layers. Might as well buy some that look awesome."
     }),
     Product.create({
-      name: 'Space jeans',
-      imageUrl:
-        'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
-      inventory: 1000,
+      name: 'Group Halloween Costume',
+      imageUrl: 'images/retro_party.jpg',
+      inventory: 40,
       style: 'adults',
-      price: 15.99,
+      price: 999.99,
       description:
-        'Who know that jeans for outer space would be so affordable? Made of a material FAR more comfortable than denim!'
+        'CosmiQlo is the only clothing purveyor in the known universe to offer this authentic group costume, replicating the outfits of the first Intergalactically famous band: Whizzle & The Spacebombs.'
     }),
     Product.create({
-      name: 'Space crown',
-      imageUrl:
-        'https://hips.hearstapps.com/pop.h-cdn.co/assets/15/23/1024x1024/square-1433360107-nasa-spacesuit.jpg?resize=980:*',
-      inventory: 1000,
+      name: 'Space Joy',
+      imageUrl: 'images/rainbow.jpg',
+      inventory: 100,
       style: 'adults',
-      price: 15.99,
+      price: 129.99,
       description:
-        'Pin the crown to your head or it will float away in zero gravity!'
+        "We, the writers at CosmiQlo, don't feel the need to describe this garment, because if you have eyes, you want to buy it."
+    }),
+    Product.create({
+      name: 'Milky Way Day Dress',
+      imageUrl: 'images/skit_top.jpg',
+      inventory: 250,
+      style: 'adults',
+      price: 79.99,
+      description:
+        'Painted like the galaxy, to remind you that you are the same as the stars you live among.'
     })
   ])
 
