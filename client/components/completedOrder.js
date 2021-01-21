@@ -1,16 +1,19 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
-import {auth} from '../store'
-import {Link} from 'react-router-dom'
-import './auth-form.css'
 
-export const completeOrderForm = props => {
+const completeOrder = ({user}) => {
   return (
     <div>
-      {this.props.user.id
-        ? 'Thank you for submotting your order!'
-        : 'Thank yuo for order request, please contunie to submit your information.., button '}
+      {user.id
+        ? 'Thank you for submitting your order!'
+        : 'Thank you for order request, please continue to filling out the form:'}
     </div>
   )
 }
+const mapState = state => {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapState)(completeOrder)

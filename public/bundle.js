@@ -192,7 +192,6 @@ function (_React$Component) {
   _createClass(AllUsers, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // console.log("this is Allusers component")
       this.props.loadUsers();
     }
   }, {
@@ -444,12 +443,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _store_cart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/cart */ "./client/store/cart.js");
-/* harmony import */ var _cart_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cart.css */ "./client/components/cart.css");
+/* harmony import */ var _completedOrder__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./completedOrder */ "./client/components/completedOrder.js");
+/* harmony import */ var _cart_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./cart.css */ "./client/components/cart.css");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -470,7 +466,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- //import {processOrder} from '../store/cart'
+
 
  // we ONLY RENDER this component if we have user on state. The statement in user-home.js makes sure this is true.
 
@@ -515,49 +511,19 @@ function (_Component) {
 
   }, {
     key: "handleSubmit",
-    value: function () {
-      var _handleSubmit = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee(event) {
-        var orderId;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                event.preventDefault();
-                console.log('cart orderId', this.props.cart[0].orderProduct.orderId);
-                orderId = this.props.cart[0].orderProduct.orderId;
-                alert('Your Order has been placed');
-                _context.prev = 4;
-                _context.next = 7;
-                return this.props.orderItems(orderId, 'complete', new Date());
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      var orderId = this.props.cart[0].orderProduct.orderId;
+      alert('Your Order has been placed');
 
-              case 7:
-                //clear the cart
-                this.props.getItems(this.props.user.id); //update the produce inventory--decided not to take care of it now
-
-                _context.next = 13;
-                break;
-
-              case 10:
-                _context.prev = 10;
-                _context.t0 = _context["catch"](4);
-                console.log(_context.t0);
-
-              case 13:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this, [[4, 10]]);
-      }));
-
-      function handleSubmit(_x) {
-        return _handleSubmit.apply(this, arguments);
+      try {
+        //process the order- update Order table with
+        //status="completed" and orderDate=today's date
+        this.props.orderItems(orderId, this.props.user.id); //clear the cart
+      } catch (err) {
+        console.log(err);
       }
-
-      return handleSubmit;
-    }()
+    }
   }, {
     key: "render",
     value: function render() {
@@ -690,6 +656,36 @@ var mapState = function mapState(state) {
 
 /***/ }),
 
+/***/ "./client/components/completedOrder.js":
+/*!*********************************************!*\
+  !*** ./client/components/completedOrder.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+
+
+var completeOrder = function completeOrder(_ref) {
+  var user = _ref.user;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, user.id ? 'Thank you for submitting your order!' : 'Thank you for order request, please continue to filling out the form:');
+};
+
+var mapState = function mapState(state) {
+  return {
+    user: state.user
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapState)(completeOrder));
+
+/***/ }),
+
 /***/ "./client/components/guestCart.js":
 /*!****************************************!*\
   !*** ./client/components/guestCart.js ***!
@@ -727,7 +723,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- //import {processOrder} from '../store/cart'
 
  // we ONLY RENDER this component if we have user on state. The statement in user-home.js makes sure this is true.
 
@@ -765,6 +760,8 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -792,17 +789,14 @@ function (_Component) {
         }, "$ ", item.price), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "ci_quantity"
         }, "Qty:1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-          className: "addremovebuttons"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          type: "button"
-        }, "Add"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          type: "button"
-        }, "Remove")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
           className: "deletebutton"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fas fa-trash"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          type: "button"
+          type: "button",
+          onClick: function onClick() {
+            _this2.props.removeOneItem(item.id);
+          }
         }, "Remove Item")));
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "cs_right"
@@ -827,6 +821,9 @@ var mapDispatch = function mapDispatch(dispatch) {
   return {
     emptyGuestCart: function emptyGuestCart() {
       dispatch(Object(_store_guestCart__WEBPACK_IMPORTED_MODULE_3__["emptyCart"])());
+    },
+    removeOneItem: function removeOneItem(productId) {
+      dispatch(Object(_store_guestCart__WEBPACK_IMPORTED_MODULE_3__["removeItem"])(productId));
     }
   };
 };
@@ -839,7 +836,7 @@ var mapDispatch = function mapDispatch(dispatch) {
 /*!************************************!*\
   !*** ./client/components/index.js ***!
   \************************************/
-/*! exports provided: Navbar, UserHome, singleProduct, Products, Cart, CartPage, UpdateProduct, Login, Signup, GuestCart */
+/*! exports provided: Navbar, UserHome, singleProduct, Products, Cart, CartPage, UpdateProduct, Login, Signup, GuestCart, completeOrder */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -873,11 +870,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _guestCart__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./guestCart */ "./client/components/guestCart.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GuestCart", function() { return _guestCart__WEBPACK_IMPORTED_MODULE_8__["default"]; });
 
+/* harmony import */ var _completedOrder__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./completedOrder */ "./client/components/completedOrder.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "completeOrder", function() { return _completedOrder__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+
 /**
  * `components/index.js` exists simply as a 'central export' for our components.
  * This way, we can import all of our components from the same place, rather than
  * having to figure out which file they belong to!
  */
+
 
 
 
@@ -973,11 +974,7 @@ var Navbar = function Navbar(_ref) {
     className: "cart_link"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-shopping-cart"
-  }), "Cart", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "cartTotal"
-  }, cart.reduce(function (acc, item) {
-    return acc + item.orderProduct.quantity;
-  }, 0))))) : // The navbar will show these links before you log in
+  }), "Cart"))) : // The navbar will show these links before you log in
   react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
     className: "navBar_links"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
@@ -989,9 +986,7 @@ var Navbar = function Navbar(_ref) {
     className: "cart_link"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
     className: "fas fa-shopping-cart"
-  }), "Cart", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "cartTotal"
-  }, "0")))));
+  }), "Cart"))));
 };
 /**
  * CONTAINER
@@ -1134,8 +1129,6 @@ function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      // we have something called this.props.products
-      // console.log('In render, props =', this.props)
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "all_products"
       }, this.props.products.map(function (product) {
@@ -1474,16 +1467,7 @@ function (_React$Component) {
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     return _this;
-  } // this is what Ksenia had:
-  // componentDidMount() {
-  //   this.setState({
-  //     // price: this.props.singleProduct.price,
-  //     // inventory: this.props.singleProduct.inventory
-  //     price: 13,
-  //     inventory: 20,
-  //   })
-  // }
-
+  }
 
   _createClass(UpdateProduct, [{
     key: "componentDidMount",
@@ -1513,8 +1497,7 @@ function (_React$Component) {
         inventory: this.state.inventory,
         price: this.state.price
       };
-      this.props.loadUpdateProduct(this.props.productId, data); // this.setState(defaultState)
-      // updateProject(this.props.projectId)
+      this.props.loadUpdateProduct(this.props.productId, data);
     }
   }, {
     key: "handleRemove",
@@ -1677,17 +1660,7 @@ var mapState = function mapState(state) {
  */
 
 UserHome.propTypes = {
-  name: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string // {/* if we have refreshed the page and there is no user on props yet, we don't load the cart. We only load the cart when we have a user's cart to fetch */}
-  // {/* {!props.user.id ? (
-  //   <div>
-  //     <h6>Loading your cart...</h6>
-  //   </div>
-  // ) : (
-  //   <div>
-  //     <Cart />
-  //   </div>
-  // )} */}
-
+  name: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
 
 /***/ }),
@@ -1840,6 +1813,9 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/guestCart",
         component: _components__WEBPACK_IMPORTED_MODULE_4__["GuestCart"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        path: "/completedOrder",
+        component: _components__WEBPACK_IMPORTED_MODULE_4__["completeOrder"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         component: _components__WEBPACK_IMPORTED_MODULE_4__["Login"]
       }));
@@ -2108,7 +2084,7 @@ var fetchItems = function fetchItems(userId) {
     }()
   );
 };
-var processOrder = function processOrder(orderId, status, date) {
+var processOrder = function processOrder(orderId, userId) {
   return (
     /*#__PURE__*/
     function () {
@@ -2122,28 +2098,30 @@ var processOrder = function processOrder(orderId, status, date) {
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/orders/".concat(orderId), {
-                  status: status,
-                  date: date
-                });
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/orders/".concat(orderId));
 
               case 3:
+                _context2.next = 5;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/cart/".concat(userId));
+
+              case 5:
                 res = _context2.sent;
-                dispatch(orderItems(res.data.id, res.data.status, res.data.date));
-                _context2.next = 10;
+                // res.data is an array of items (the products in the order)
+                dispatch(getItems(res.data));
+                _context2.next = 12;
                 break;
 
-              case 7:
-                _context2.prev = 7;
+              case 9:
+                _context2.prev = 9;
                 _context2.t0 = _context2["catch"](0);
                 console.log(_context2.t0);
 
-              case 10:
+              case 12:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 7]]);
+        }, _callee2, null, [[0, 9]]);
       }));
 
       return function (_x2) {
@@ -2339,11 +2317,12 @@ function cartReducer() {
 /*!***********************************!*\
   !*** ./client/store/guestCart.js ***!
   \***********************************/
-/*! exports provided: fetchGuestProduct, emptyCart, default */
+/*! exports provided: removeItem, fetchGuestProduct, emptyCart, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeItem", function() { return removeItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchGuestProduct", function() { return fetchGuestProduct; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "emptyCart", function() { return emptyCart; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return guestCartReducer; });
@@ -2366,6 +2345,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var ADD_GUEST_PRODUCT = 'ADD_GUEST_PRODUCT';
 var EMPTY_GUEST_CART = 'EMPTY_GUEST_CART';
+var REMOVE_ITEM = 'REMOVE_ITEM';
 /*** INITIAL STATE ***/
 
 var initialState = [];
@@ -2383,8 +2363,14 @@ var emptyGuestCart = function emptyGuestCart() {
     type: EMPTY_GUEST_CART
   };
 };
-/*** THUNK CREATOR ***/
 
+var removeItem = function removeItem(productId) {
+  return {
+    type: REMOVE_ITEM,
+    payload: productId
+  };
+};
+/*** THUNK CREATOR ***/
 
 var fetchGuestProduct = function fetchGuestProduct(productId) {
   return (
@@ -2435,7 +2421,9 @@ var emptyCart = function emptyCart() {
       console.error(err);
     }
   };
-};
+}; // export const removeItem = (productId) => dispatch => {
+// }
+
 /*** REDUCERS ***/
 
 function guestCartReducer() {
@@ -2448,6 +2436,20 @@ function guestCartReducer() {
 
     case EMPTY_GUEST_CART:
       return initialState;
+
+    case REMOVE_ITEM:
+      var newState = [];
+      var foundOne = false;
+
+      for (var i = 0; i < state.length; i++) {
+        if (state[i].id === action.payload && !foundOne) {
+          foundOne = true;
+        } else {
+          newState.push(state[i]);
+        }
+      }
+
+      return newState;
 
     default:
       return state;
@@ -2781,7 +2783,7 @@ var fetchUpdateSingleProduct = function fetchUpdateSingleProduct(productId, data
     function () {
       var _ref2 = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee2(dispatch, getState) {
+      regeneratorRuntime.mark(function _callee2(dispatch) {
         var res;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
@@ -2811,7 +2813,7 @@ var fetchUpdateSingleProduct = function fetchUpdateSingleProduct(productId, data
         }, _callee2, null, [[0, 8]]);
       }));
 
-      return function (_x2, _x3) {
+      return function (_x2) {
         return _ref2.apply(this, arguments);
       };
     }()

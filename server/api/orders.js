@@ -6,7 +6,7 @@ router.put('/:orderId', async (req, res, next) => {
   try {
     //update the order status to "completed" and orderDate="thatDay" for the current order
     const orderId = req.params.orderId
-    console.log('Current Order No', orderId)
+
     const order = await Order.findByPk(req.params.orderId)
     await order.update({
       status: 'complete',

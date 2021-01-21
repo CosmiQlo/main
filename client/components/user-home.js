@@ -38,14 +38,3 @@ export default connect(mapState)(UserHome)
 UserHome.propTypes = {
   name: PropTypes.string
 }
-
-// {/* if we have refreshed the page and there is no user on props yet, we don't load the cart. We only load the cart when we have a user's cart to fetch */}
-// {/* {!props.user.id ? (
-//   <div>
-//     <h6>Loading your cart...</h6>
-//   </div>
-// ) : (
-//   <div>
-//     <Cart />
-//   </div>
-// )} */}
