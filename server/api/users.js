@@ -11,7 +11,7 @@ router.get('/', isAdmin, async (req, res, next) => {
       // send everything to anyone who asks!
       attributes: ['id', 'name', 'email']
     })
-    console.log('this is users from db', users)
+
     res.json(users)
   } catch (err) {
     next(err)

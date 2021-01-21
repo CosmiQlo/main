@@ -25,8 +25,6 @@ export class Products extends React.Component {
     this.props.addItemToGuestCart(productId)
   }
   render() {
-    // we have something called this.props.products
-    // console.log('In render, props =', this.props)
     return (
       <div className="all_products">
         {this.props.products.map(product => {
@@ -46,7 +44,6 @@ export class Products extends React.Component {
                     productId={product.id}
                     className="buy_button"
                   >
-                    {/* comment out productId? */}
                     EDIT
                   </Link>
                 ) : product.inventory > 0 ? (

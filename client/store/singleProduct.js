@@ -19,10 +19,7 @@ export const fetchSingleProduct = productId => async dispatch => {
   }
 }
 
-export const fetchUpdateSingleProduct = (productId, data) => async (
-  dispatch,
-  getState
-) => {
+export const fetchUpdateSingleProduct = (productId, data) => async dispatch => {
   try {
     console.log('this is reducer')
     const res = await axios.put(`/api/products/${productId}/update`, data)

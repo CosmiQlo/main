@@ -8,7 +8,7 @@ import {
   removeOne,
   processOrder
 } from '../store/cart'
-//import {processOrder} from '../store/cart'
+import completeOrder from './completedOrder'
 import './cart.css'
 
 // we ONLY RENDER this component if we have user on state. The statement in user-home.js makes sure this is true.
@@ -36,7 +36,7 @@ export class Cart extends Component {
   //show the alerbox for now
   handleSubmit(event) {
     event.preventDefault()
-    console.log('cart orderId', this.props.cart[0].orderProduct.orderId)
+
     const orderId = this.props.cart[0].orderProduct.orderId
     alert('Your Order has been placed')
     try {
@@ -124,6 +124,7 @@ export class Cart extends Component {
                 </p>
               </div>
               <div>
+                {/* <button type="submit"><Link to="/completedOrder">Checkout</Link></button> */}
                 <button type="submit">Checkout</button>
               </div>
             </div>

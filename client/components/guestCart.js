@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {emptyCart, removeItem} from '../store/guestCart'
-//import {processOrder} from '../store/cart'
+
 import './cart.css'
 
 // we ONLY RENDER this component if we have user on state. The statement in user-home.js makes sure this is true.

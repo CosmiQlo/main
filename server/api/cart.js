@@ -18,8 +18,7 @@ router.get('/:userId', isRightUser, async (req, res, next) => {
         status: 'pending'
       }
     })
-    // console.log('userOrder:', userOrder)
-    // console.log('order.getProducts', await userOrder[0].getProducts())
+
     let products = []
     if (userOrder.length > 0) {
       products = await userOrder[0].getProducts()

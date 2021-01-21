@@ -25,16 +25,6 @@ class UpdateProduct extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  // this is what Ksenia had:
-  // componentDidMount() {
-  //   this.setState({
-  //     // price: this.props.singleProduct.price,
-  //     // inventory: this.props.singleProduct.inventory
-  //     price: 13,
-  //     inventory: 20,
-  //   })
-  // }
-
   componentDidMount() {
     console.log('componentDidMount, this.props:', this.props)
     this.props.getProduct(this.props.productId)
@@ -63,9 +53,6 @@ class UpdateProduct extends React.Component {
       price: this.state.price
     }
     this.props.loadUpdateProduct(this.props.productId, data)
-    // this.setState(defaultState)
-
-    // updateProject(this.props.projectId)
   }
 
   handleRemove(productId) {

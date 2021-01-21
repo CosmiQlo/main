@@ -6,7 +6,6 @@ import './AllUsers.css'
 
 export class AllUsers extends React.Component {
   componentDidMount() {
-    // console.log("this is Allusers component")
     this.props.loadUsers()
   }
 
