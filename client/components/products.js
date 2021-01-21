@@ -32,7 +32,7 @@ export class Products extends React.Component {
             // this could be where we make the product.name a LINK that goes to single product view, etc.
             <div key={product.id} className="product">
               <Link to={`/products/${product.id}`}>
-                <img src={product.imageUrl} />
+                <img src={product.imageUrl} className="image" />
               </Link>
               <div className="product_info">
                 <p className="info_name">{product.name}</p>

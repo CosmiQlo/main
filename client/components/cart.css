@@ -26,6 +26,15 @@
   height: fit-content;
 }
 
+.image {
+  height: 200px;
+  border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
 .cs_right {
   flex: 0.2;
   background: #f0efef;

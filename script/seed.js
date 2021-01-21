@@ -29,7 +29,7 @@ async function seed() {
   const products = await Promise.all([
     Product.create({
       name: 'Intergalactic Active Wear Onepiece',
-      imageUrl: 'images/active_outfit.jpg',
+      imageUrl: '/images/active_outfit.jpg',
       inventory: 50,
       style: 'adults',
       price: 89.99,
@@ -38,7 +38,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Alien Fan Matched Set',
-      imageUrl: 'images/alien_logo_outfit.jpg',
+      imageUrl: '/images/alien_logo_outfit.jpg',
       inventory: 20,
       style: 'adults',
       price: 79.99,
@@ -47,7 +47,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Cosmic Cocktail Attire',
-      imageUrl: 'images/ballgown1.jpg',
+      imageUrl: '/images/ballgown1.jpg',
       inventory: 150,
       style: 'adults',
       price: 299.99,
@@ -56,7 +56,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Black Tie Affair Gown',
-      imageUrl: 'images/ballgown2.jpg',
+      imageUrl: '/images/ballgown2.jpg',
       inventory: 20,
       style: 'adults',
       price: 499.99,
@@ -65,7 +65,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Business-Martian Suit',
-      imageUrl: 'images/business_suit.jpg',
+      imageUrl: '/images/business_suit.jpg',
       inventory: 1000,
       style: 'adults',
       price: 89.99,
@@ -74,7 +74,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Everyday Cape Look',
-      imageUrl: 'images/cape_outfit.jpg',
+      imageUrl: '/images/cape_outfit.jpg',
       inventory: 1500,
       style: 'adults',
       price: 69.99,
@@ -83,7 +83,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Casual Shift Dress',
-      imageUrl: 'images/casual_dress.jpg',
+      imageUrl: '/images/casual_dress.jpg',
       inventory: 3500,
       style: 'adults',
       price: 49.99,
@@ -92,7 +92,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Sleek Everyday Ensemble',
-      imageUrl: 'images/chic_shirt_pants.jpg',
+      imageUrl: '/images/chic_shirt_pants.jpg',
       inventory: 1000,
       style: 'adults',
       price: 39.99,
@@ -101,7 +101,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Retro Spacesuit',
-      imageUrl: 'images/classic_mens.jpg',
+      imageUrl: '/images/classic_mens.jpg',
       inventory: 3500,
       style: 'adults',
       price: 99.99,
@@ -110,7 +110,7 @@ async function seed() {
     }),
     Product.create({
       name: 'High-Fashion Globe Outfit',
-      imageUrl: 'images/classic.jpg',
+      imageUrl: '/images/classic.jpg',
       inventory: 1500,
       style: 'adults',
       price: 659.99,
@@ -119,7 +119,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Trio Of Power Looks',
-      imageUrl: 'images/cut_right.jpg',
+      imageUrl: '/images/cut_right.jpg',
       inventory: 500,
       style: 'adults',
       price: 4399.99,
@@ -128,7 +128,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Eye-Catching Minidress',
-      imageUrl: 'images/full_cover_white.jpg',
+      imageUrl: '/images/full_cover_white.jpg',
       inventory: 200,
       style: 'adults',
       price: 29.99,
@@ -137,7 +137,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Head-To-Toe Chic',
-      imageUrl: 'images/full_dress_outfit.jpg',
+      imageUrl: '/images/full_dress_outfit.jpg',
       inventory: 100,
       style: 'adults',
       price: 120.99,
@@ -146,7 +146,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Ready-For-Anything Jumpsuit',
-      imageUrl: 'images/jumpsuit.jpg',
+      imageUrl: '/images/jumpsuit.jpg',
       inventory: 1900,
       style: 'adults',
       price: 75.99,
@@ -155,7 +155,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Tot Helmet',
-      imageUrl: 'images/kids1.jpg',
+      imageUrl: '/images/kids1.jpg',
       inventory: 800,
       style: 'kids',
       price: 19.99,
@@ -164,7 +164,7 @@ async function seed() {
     }),
     Product.create({
       name: 'XTREME Kiddo Headset',
-      imageUrl: 'images/kids2.jpg',
+      imageUrl: '/images/kids2.jpg',
       inventory: 300,
       style: 'kids',
       price: 49.99,
@@ -173,7 +173,7 @@ async function seed() {
     }),
     Product.create({
       name: "Children's Wearable Sleeping Bag",
-      imageUrl: 'images/kids3.jpg',
+      imageUrl: '/images/kids3.jpg',
       inventory: 900,
       style: 'kids',
       price: 59.99,
@@ -182,7 +182,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Sibling Explorer Getup',
-      imageUrl: 'images/kids4.jpg',
+      imageUrl: '/images/kids4.jpg',
       inventory: 300,
       style: 'kids',
       price: 99.99,
@@ -191,7 +191,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Plaid Mini Moonwalker Dress',
-      imageUrl: 'images/kids5.jpg',
+      imageUrl: '/images/kids5.jpg',
       inventory: 100,
       style: 'kids',
       price: 29.99,
@@ -200,7 +200,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Flower Girl Outfit',
-      imageUrl: 'images/kids6.jpg',
+      imageUrl: '/images/kids6.jpg',
       inventory: 100,
       style: 'kids',
       price: 89.99,
@@ -209,7 +209,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Motherboard Dress',
-      imageUrl: 'images/long_dress.jpg',
+      imageUrl: '/images/long_dress.jpg',
       inventory: 400,
       style: 'adults',
       price: 109.99,
@@ -218,7 +218,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Nebula Dress',
-      imageUrl: 'images/silver_dress.jpg',
+      imageUrl: '/images/silver_dress.jpg',
       inventory: 1400,
       style: 'adults',
       price: 189.99,
@@ -227,7 +227,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Geometric Sculpture Gown',
-      imageUrl: 'images/shoulder_short_dress.jpg',
+      imageUrl: '/images/shoulder_short_dress.jpg',
       inventory: 100,
       style: 'adults',
       price: 1999.99,
@@ -236,7 +236,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Off-The-Shoulder Wrap',
-      imageUrl: 'images/short_dress.jpg',
+      imageUrl: '/images/short_dress.jpg',
       inventory: 50,
       style: 'adults',
       price: 79.99,
@@ -245,7 +245,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Punk-Rock Neptune Streetwear',
-      imageUrl: 'images/punk_dress.jpg',
+      imageUrl: '/images/punk_dress.jpg',
       inventory: 200,
       style: 'adults',
       price: 39.99,
@@ -254,7 +254,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Group Halloween Costume',
-      imageUrl: 'images/retro_party.jpg',
+      imageUrl: '/images/retro_party.jpg',
       inventory: 40,
       style: 'adults',
       price: 999.99,
@@ -263,7 +263,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Space Joy',
-      imageUrl: 'images/rainbow.jpg',
+      imageUrl: '/images/rainbow.jpg',
       inventory: 100,
       style: 'adults',
       price: 129.99,
@@ -272,7 +272,7 @@ async function seed() {
     }),
     Product.create({
       name: 'Milky Way Day Dress',
-      imageUrl: 'images/skit_top.jpg',
+      imageUrl: '/images/skit_top.jpg',
       inventory: 250,
       style: 'adults',
       price: 79.99,
