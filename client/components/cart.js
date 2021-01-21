@@ -67,7 +67,7 @@ export class Cart extends Component {
                     return (
                       <div key={item.id} className="cs_item">
                         <Link to={`/products/${item.id}`}>
-                          <img src={`${item.imageUrl}`} />
+                          <img src={`${item.imageUrl}`} className="image" />
                         </Link>
                         <p className="ci_name">{item.name}</p>
                         <p className="ci_price">$ {item.price}</p>
